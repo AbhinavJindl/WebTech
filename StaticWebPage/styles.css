@@ -1,0 +1,128 @@
+:root {
+    --pad: 65px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 1357px;
+    margin: 0px;
+}
+
+header {
+    color: #0538C1;
+    text-align: left;
+    padding-left: var(--pad);
+    border-bottom: 1px solid black;
+    font-family: 'Abril Fatface';
+    font-size: 20px;
+    letter-spacing: 1px;
+    padding-top: 10px;
+}
+
+.main-body{
+    padding-left: var(--pad);
+}
+
+nav {
+    text-align: left;
+    margin-bottom: 22px;
+}
+
+nav a {
+    padding-right: 14px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: inline-block;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+#nav-home {
+    color: #0538C1;
+}
+
+#cutlery-image {
+    background-image: url("https://csci571.com/hw/hw3/images/Cutlery.png");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 700px;
+    /* background-size: 1297px auto;
+    background-position: 80px -80px; */
+    background-size: 1227px 1200px;
+  background-position: var(--pad) -100px;
+}
+
+main {
+    padding-right: 50px;
+
+    .background-block {
+        height: 200px;
+        align-items: center;
+        position: absolute;
+        top: 250px;
+        padding-left: 70px;
+
+        .fall-cutlery-collection-text {
+            font-family: 'Abril Fatface';
+            width: 600px;
+            font-size: 60px;
+            font-weight: 200;
+            color: #0538C1;
+            letter-spacing: 3px;
+        }
+    
+        .shop-now-button {
+            background-color: white;
+            color: black;
+            padding: 17px 20px;
+            border: none;
+            font-size: 17px;
+            width: 85px;
+            margin-top: 70px;
+            font-weight: 500;
+        }
+    }
+
+    
+
+    .main-heading {
+        font-family: 'Abril Fatface';
+        color: #0538C1;
+        font-size: 30px;
+        font-weight: 200;
+        letter-spacing: 1px;
+        text-align: center;
+        padding-top: 40px;
+        padding-bottom: 30px;
+    }
+
+    .main-images-container {
+        display: flex;
+        flex-direction: column;
+
+        .main-images-row {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+
+            .section-block {
+                flex: 1;
+                text-align: center;
+            
+                .section-text {
+                    font-family: 'Abril Fatface';
+                    color: #0538C1;
+                    padding: 40px 10px 70px 10px;
+                    text-align: center;
+                    font-weight: 200;
+                    font-size: 25px;
+                }
+            
+                #images {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
