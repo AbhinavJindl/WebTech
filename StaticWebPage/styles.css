@@ -105,11 +105,12 @@ main {
         .main-images-row {
             display: flex;
             flex-direction: row;
-            gap: 40px;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 50px;
 
             .section-block {
                 flex: 1;
-                text-align: center;
             
                 .section-text {
                     font-family: 'Abril Fatface';
