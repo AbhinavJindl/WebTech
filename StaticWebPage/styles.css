@@ -42,6 +42,7 @@ nav a {
     color: #0538C1;
 }
 
+/* referred https://www.w3schools.com/cssref/pr_background-attachment.php */
 #cutlery-image {
     background-image: url("https://csci571.com/hw/hw3/images/Cutlery.png");
     background-attachment: fixed;
