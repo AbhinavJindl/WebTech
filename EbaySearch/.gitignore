@@ -1,1 +1,2 @@
-./assignment2_env/
+.assignment2_env/
+*.pyc
