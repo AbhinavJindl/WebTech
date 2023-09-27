@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from ebay_oauth_token import OAuthToken
 from flask_api import status
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -11,7 +12,7 @@ APP_SECRET = "PRD-728e27357d6a-d19f-4efd-a790-d224"
 URL = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME={app_id}&RESPONSE-DATA-FORMAT=JSON&RESTPAYLOAD"
 SINGLE_ITEM_URL = "https://open.api.ebay.com/shopping?callname=GetSingleItem&responseencoding=JSON&appid={app_id}&siteId=0&version=967&ItemID={item_id}&IncludeSelector=Description,Details,ItemSpecifics"
 
-@app.route('/ebay_search')
+@app.route('/')
 def render_html():
     return send_from_directory(app.static_folder, 'index.html')
 
@@ -127,4 +128,4 @@ def get_single_item():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    app.run(host="0.0.0.0", port=os.getenv("PORT", 8080), debug=True)

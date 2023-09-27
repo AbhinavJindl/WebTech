@@ -64,7 +64,8 @@ button {
 }
 
 button:hover {
-    background-color: green;
+    background-color: rgb(55, 205, 55);
+    color: white;
 }
 
 select {
