@@ -1,4 +1,4 @@
-const HOST = 'http://127.0.0.1:8080'
+const HOST = ''
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();

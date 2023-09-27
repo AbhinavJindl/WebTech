@@ -1,11 +1,9 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from ebay_oauth_token import OAuthToken
-from flask_cors import CORS
 from flask_api import status
 import requests
 
 app = Flask(__name__)
-CORS(app)
 
 APP_ID = "AbhinavJ-WebTech-PRD-6728e2735-0d69d3d7"
 APP_SECRET = "PRD-728e27357d6a-d19f-4efd-a790-d224"
@@ -13,6 +11,9 @@ APP_SECRET = "PRD-728e27357d6a-d19f-4efd-a790-d224"
 URL = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME={app_id}&RESPONSE-DATA-FORMAT=JSON&RESTPAYLOAD"
 SINGLE_ITEM_URL = "https://open.api.ebay.com/shopping?callname=GetSingleItem&responseencoding=JSON&appid={app_id}&siteId=0&version=967&ItemID={item_id}&IncludeSelector=Description,Details,ItemSpecifics"
 
+@app.route('/ebay_search')
+def render_html():
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route("/find_items_advanced", methods=["GET"])
 def find_items_advanced():
