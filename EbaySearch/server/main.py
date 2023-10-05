@@ -4,7 +4,7 @@ from flask_api import status
 import requests
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../static')
 
 APP_ID = "AbhinavJ-WebTech-PRD-6728e2735-0d69d3d7"
 APP_SECRET = "PRD-728e27357d6a-d19f-4efd-a790-d224"
