@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, send_from_directory
-from ebay_oauth_token import OAuthToken
+from server.ebay_oauth_token import OAuthToken
 from flask_api import status
 import requests
 import os
