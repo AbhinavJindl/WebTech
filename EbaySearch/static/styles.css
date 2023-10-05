@@ -163,7 +163,7 @@ select {
         slowly zoom on image on hovering (7 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
         */
         .card-img {
-            height: 80px;
+            max-height: 80px;
             max-width: 100px;
             transition: transform 0.3s ease;
             border: 2px solid lightgray;
