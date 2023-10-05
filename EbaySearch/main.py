@@ -106,7 +106,7 @@ def find_items_advanced():
         data = {'searchResult': data['searchResult'][0], 'paginationOutput': data['paginationOutput'][0]}
         return jsonify(data)
     except Exception as e:
-        return "API call failed" + e, status.HTTP_500_INTERNAL_SERVER_ERROR
+        return "API call failed" + str(e), status.HTTP_500_INTERNAL_SERVER_ERROR
 
 
 @app.route("/get_single_item", methods=["GET"])
@@ -124,7 +124,7 @@ def get_single_item():
         response = requests.get(url, headers=headers)
         return jsonify(response.json())
     except Exception as e:
-        return "Get Single Item API call failed" + e, status.HTTP_500_INTERNAL_SERVER_ERROR
+        return "Get Single Item API call failed" + str(e), status.HTTP_500_INTERNAL_SERVER_ERROR
 
 
 if __name__ == "__main__":

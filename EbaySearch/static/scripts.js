@@ -2,8 +2,12 @@ const HOST = ''
 
 document.getElementById('searchForm').addEventListener('submit', function(event) {
     event.preventDefault();
+    const params = validateForm();
+    if (params === false) {
+        return false;
+    }
     clearResults();
-    validateForm();
+    fetch_page_data(params);
 })
 
 
@@ -34,7 +38,7 @@ function clearResults() {
     document.getElementById('item-container').innerHTML = '';
 }
 
-async function validateForm() {
+function validateForm() {
     const keywords = document.getElementById('keywords').value;
     const sortOrder = document.getElementById('sortBy').value;
 
@@ -82,7 +86,7 @@ async function validateForm() {
         params['conditionUsed'] = 'true'
     }
     if (veryGoodCheckbox.checked) {
-        params['conditionVerGood'] = 'true'
+        params['conditionVeryGood'] = 'true'
     }
     if (goodCheckbox.checked) {
         params['conditionGood'] = 'true'
@@ -106,8 +110,8 @@ async function validateForm() {
         params['expeditedShipping'] = 'true'
     }
 
+    return params
 
-    await fetch_page_data(params);
 }
 
 async function fetch_page_data(params) {
@@ -138,7 +142,7 @@ function showLessData() {
     showMoreButton.textContent = 'Show More';
     showMoreButton.onclick = showMoreData;
     window.scrollTo({
-        top: 0,
+        top: -document.documentElement.scrollHeight,
         behavior: 'smooth'
     });   
 
@@ -160,34 +164,9 @@ function showMoreData() {
 }
 
 function validateItem(item) {
-    if (!item.title || item.title.length == 0) {
+    if (!item.title || item.title.length == 0 || item.title[0].trim() == "") {
         return false
     }
-
-    if (!item.primaryCategory || item.primaryCategory.length == 0 || !item.primaryCategory[0].categoryName || item.primaryCategory[0].categoryName.length == 0) {
-        return false
-    }
-
-    if (!item.condition || item.condition.length == 0 || !item.condition[0].conditionDisplayName || item.condition[0].conditionDisplayName.length == 0) {
-        return false
-    }
-
-    if (!item.sellingStatus || item.sellingStatus.length == 0 || !item.sellingStatus[0].convertedCurrentPrice || item.sellingStatus[0].convertedCurrentPrice.length == 0) {
-        return false
-    }
-
-    if (!item.shippingInfo || item.shippingInfo.length == 0 || !item.shippingInfo[0].shippingServiceCost || item.shippingInfo[0].shippingServiceCost.length == 0) {
-        return false
-    }
-
-    if (!item.topRatedListing || item.topRatedListing.length == 0) {
-        return false;
-    }
-
-    if (!item.viewItemURL || item.viewItemURL.length == 0) {
-        return false;
-    }
-
     return true
 }
 
@@ -230,63 +209,92 @@ function loadPageData(itemsList, totalItems, keywords) {
         };
         card.className = 'card';
 
+        const cardImgContainer = document.createElement('div');
+        cardImgContainer.className = 'card-img-container'
         const cardImg = document.createElement('img');
         cardImg.className = 'card-img';
 
-        if (!item.galleryURL || item.galleryURL.length == 0) {
-            cardImg.src = 'https://www.csci571.com/hw/hw6/images/ebay_default.jpg'
+        if (!item.galleryURL || item.galleryURL.length == 0 || item.galleryURL[0].trim() == "") {
+            cardImg.src = 'https://csci571.com/hw/hw6/images/ebay_default.jpg'
         } else {
             cardImg.src = item.galleryURL[0];
         }
+        cardImgContainer.appendChild(cardImg);
+        card.appendChild(cardImgContainer);
 
         const cardContent = document.createElement('div');
         cardContent.className = 'card-content';
 
+
         const cardTitle = document.createElement('div');
         cardTitle.className = 'card-title';
         cardTitle.textContent = item.title[0];
+        cardContent.appendChild(cardTitle);
+        
 
-        const cardBody1 = document.createElement('div');
-        cardBody1.className = 'card-body';
-        cardBody1.textContent = `Category: ${item.primaryCategory[0].categoryName[0]}`;
+        try {
+            if (item.primaryCategory && item.primaryCategory.length > 0 && item.primaryCategory[0].categoryName && item.primaryCategory[0].categoryName.length > 0 && item.primaryCategory[0].categoryName[0].trim() !== "") {
+                const cardBody1 = document.createElement('div');
+                cardBody1.className = 'card-body';
+                cardBody1.textContent = `Category: ${item.primaryCategory[0].categoryName[0]}`;
+                cardContent.appendChild(cardBody1);
 
-        const stopPropagation = document.createElement('div')
-        stopPropagation.onclick = stopPropagate
-        const redirectImg = document.createElement('a')
-        redirectImg.href = item.viewItemURL[0]
-        redirectImg.setAttribute("target", "_blank");
-        const itemRedirectImg = document.createElement('img');
-        itemRedirectImg.src = 'https://www.csci571.com/hw/hw6/images/redirect.png'
-        itemRedirectImg.className = 'redirect-img';
-        redirectImg.appendChild(itemRedirectImg);
-        stopPropagation.appendChild(redirectImg);
-        cardBody1.appendChild(stopPropagation);
+                if (!(!item.viewItemURL || item.viewItemURL.length == 0 || item.viewItemURL[0].trim() == "")) {
+                    const stopPropagation = document.createElement('div')
+                    stopPropagation.onclick = stopPropagate
+                    const redirectImg = document.createElement('a')
+                    redirectImg.href = item.viewItemURL[0]
+                    redirectImg.setAttribute("target", "_blank");
+                    const itemRedirectImg = document.createElement('img');
+                    itemRedirectImg.src = 'https://csci571.com/hw/hw6/images/redirect.png'
+                    itemRedirectImg.className = 'redirect-img';
+                    redirectImg.appendChild(itemRedirectImg);
+                    stopPropagation.appendChild(redirectImg);
+                    cardBody1.appendChild(stopPropagation);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
 
-        const cardBody2 = document.createElement('div');
-        cardBody2.className = 'card-body';
-        cardBody2.textContent = `Condition: ${item.condition[0].conditionDisplayName[0]}`;
 
-        if (item.topRatedListing[0] === "true") {
-            const topRatedImg = document.createElement('img');
-            topRatedImg.className = 'top-rated-img';
-            topRatedImg.src = 'https://www.csci571.com/hw/hw6/images/topRatedImage.png';
-            cardBody2.appendChild(topRatedImg);
+        try {
+            if (!(!item.condition || item.condition.length == 0 || !item.condition[0].conditionDisplayName || item.condition[0].conditionDisplayName.length == 0 || item.condition[0].conditionDisplayName[0].trim() == "")) {
+                const cardBody2 = document.createElement('div');
+                cardBody2.className = 'card-body';
+                cardBody2.textContent = `Condition: ${item.condition[0].conditionDisplayName[0]}`;
+                cardContent.appendChild(cardBody2);
+
+                if (item.topRatedListing && item.topRatedListing.length > 0 && item.topRatedListing[0] === "true") {
+                    const topRatedImg = document.createElement('img');
+                    topRatedImg.className = 'top-rated-img';
+                    topRatedImg.src = 'https://csci571.com/hw/hw6/images/topRatedImage.png';
+                    cardBody2.appendChild(topRatedImg);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+        try {
+            if (!(!item.sellingStatus || item.sellingStatus.length == 0 || !item.sellingStatus[0].convertedCurrentPrice || item.sellingStatus[0].convertedCurrentPrice.length == 0)) {
+                const priceContent = document.createElement('div');
+                priceContent.className = 'card-title';
+                priceContent.textContent = `Price: $${item.sellingStatus[0].convertedCurrentPrice[0].__value__}`
+                if (!(!item.shippingInfo || item.shippingInfo.length == 0 || !item.shippingInfo[0].shippingServiceCost || item.shippingInfo[0].shippingServiceCost.length == 0)) {
+                    const shipping_cost = item.shippingInfo[0].shippingServiceCost[0].__value__
+                    if (shipping_cost >= 0.01) {
+                        priceContent.textContent = priceContent.textContent + ` (+ $${shipping_cost} for shipping)`
+                    }
+                }
+                
+                cardContent.appendChild(priceContent);
+            }
+        } catch (e) {
+            console.log(e);
         }
         
 
-        const priceContent = document.createElement('div');
-        priceContent.className = 'card-title';
-        priceContent.textContent = `Price: $${item.sellingStatus[0].convertedCurrentPrice[0].__value__}`
-        const shipping_cost = item.shippingInfo[0].shippingServiceCost[0].__value__
-        if (shipping_cost >= 0.01) {
-            priceContent.textContent = priceContent.textContent + ` (+ $${shipping_cost} for shipping)`
-        }
-
-        cardContent.appendChild(cardTitle);
-        cardContent.appendChild(cardBody1);
-        cardContent.appendChild(cardBody2);
-        cardContent.appendChild(priceContent);
-        card.appendChild(cardImg);
         card.appendChild(cardContent);
 
         if (i>=3) {
@@ -301,7 +309,6 @@ function loadPageData(itemsList, totalItems, keywords) {
     showMoreButton.textContent = 'Show More';
     showMoreButton.onclick = showMoreData;
     container.appendChild(showMoreButton)
-
 }
 
 
@@ -336,20 +343,42 @@ async function loadSingleItemData(id) {
         }
         if (data.ReturnPolicy.ReturnsWithin) {
             returnPolicyText = returnPolicyText + `within ${data.ReturnPolicy.ReturnsWithin}`
-        } 
+        }
 
-        itemObject = {
-            'Title': data.Title,
-            'Price': `${data.CurrentPrice.Value} ${data.CurrentPrice.CurrencyID}`,
-            'Location': `${data.Location}, ${data.PostalCode}`,
-            'Seller': data.Seller.UserID,
-            'Return Policy(US)': returnPolicyText,
+        itemObject = {}
+
+        if (data.Title) {
+            itemObject['Title'] = data.Title
+        }
+
+        if (data.CurrentPrice.Value && data.CurrentPrice.CurrencyID) {
+            itemObject['Price'] = `${data.CurrentPrice.Value} ${data.CurrentPrice.CurrencyID}`
+        }
+
+        if (data.Location && data.PostalCode) {
+            itemObject['Location'] = `${data.Location}, ${data.PostalCode}`
+        }
+
+        if (data.Seller.UserID) {
+            itemObject['Seller'] = data.Seller.UserID
+        }
+
+        if (returnPolicyText) {
+            itemObject['Return Policy(US)'] = returnPolicyText
         }
 
         const itemSpecifics = data.ItemSpecifics.NameValueList;
 
         for (let itemSpecific in itemSpecifics) {
-            itemObject[itemSpecifics[itemSpecific].Name] = itemSpecifics[itemSpecific].Value[0]
+            try {
+                if (itemSpecifics[itemSpecific].Value[0]) {
+                    itemObject[itemSpecifics[itemSpecific].Name] = itemSpecifics[itemSpecific].Value[0]
+                }
+            }
+            catch (e) {
+                console.log(e)
+            }
+            
         }
 
         const imageRow = document.createElement('tr');
@@ -361,7 +390,7 @@ async function loadSingleItemData(id) {
         imageRowValueCell.className = 'item-table-value';
         const imageRowValueImg = document.createElement('img');
         if (!data.PictureURL || data.PictureURL.length == 0) {
-            imageRowValueImg.src = 'https://www.csci571.com/hw/hw6/images/ebay_default.jpg'
+            imageRowValueImg.src = 'https://csci571.com/hw/hw6/images/ebay_default.jpg'
         } else {
             imageRowValueImg.src = data.PictureURL[0];
         }
