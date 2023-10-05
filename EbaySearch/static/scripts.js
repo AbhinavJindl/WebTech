@@ -27,12 +27,17 @@ function showItemDetails() {
     div2.innerHTML = ''
 }
 
-// ChatGPT - how to clear results on button click? (next 3 lines)
+/*
+how to clear results on button click? (3 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+*/
 document.getElementById('clear-btn').addEventListener('click', function() {
     document.getElementById('searchForm').reset();
     clearResults();
 });
 
+/*
+how to clear results on button click? (2 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+*/
 function clearResults() {
     document.getElementById('card-container').innerHTML = '';
     document.getElementById('item-container').innerHTML = '';
@@ -156,6 +161,9 @@ function showMoreData() {
     }
     showMoreButton.textContent = 'Show Less';
     showMoreButton.onclick = showLessData;
+    /*
+    scroll to bottom of page using js (3 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+    */
     window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth'
@@ -174,6 +182,9 @@ function stopPropagate(e) {
     e.stopPropagation();
 }
 
+/*
+display the response of some objects list from API as cards in HTML frontend using JS (20 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+*/
 function loadPageData(itemsList, totalItems, keywords) {
     showResults();
     const container = document.getElementById('card-container');

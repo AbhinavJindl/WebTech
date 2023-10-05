@@ -145,6 +145,10 @@ select {
         }
     }
 
+
+    /*
+    shadow effect on hovering on card (2 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+    */
     .card:hover {
         box-shadow: 4px 4px 10px gray;
     }
@@ -155,6 +159,9 @@ select {
         align-items: center;
         justify-content: center;
 
+        /*
+        slowly zoom on image on hovering (7 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+        */
         .card-img {
             height: 80px;
             max-width: 100px;
@@ -177,6 +184,9 @@ select {
         margin: 10px;
     }
 
+    /*
+    add table borders (5 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
+    */
     .item-detail-table {
         border-collapse: collapse;
     

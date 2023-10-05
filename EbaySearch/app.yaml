@@ -1,3 +1,4 @@
+# create a app.yaml file for gcloud deploymenet of a flask app with requirements.txt (5 lines). ChatGPT, 4 Sep. version, OpenAI, 01 Oct. 2023, chat.openai.com/chat.
 runtime: python311
 instance_class: F1
 entrypoint: gunicorn -b :${PORT:-8080} server.main:app
