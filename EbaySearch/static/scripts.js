@@ -236,7 +236,11 @@ function loadPageData(itemsList, totalItems, keywords) {
             if (item.primaryCategory && item.primaryCategory.length > 0 && item.primaryCategory[0].categoryName && item.primaryCategory[0].categoryName.length > 0 && item.primaryCategory[0].categoryName[0].trim() !== "") {
                 const cardBody1 = document.createElement('div');
                 cardBody1.className = 'card-body';
-                cardBody1.textContent = `Category: ${item.primaryCategory[0].categoryName[0]}`;
+                cardBody1.textContent = "Category:"
+                cardBody1.innerHTML += "&nbsp;"
+                const italicText = document.createElement('em');
+                italicText.textContent = item.primaryCategory[0].categoryName[0];
+                cardBody1.appendChild(italicText);
                 cardContent.appendChild(cardBody1);
 
                 if (!(!item.viewItemURL || item.viewItemURL.length == 0 || item.viewItemURL[0].trim() == "")) {

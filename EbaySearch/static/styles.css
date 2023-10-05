@@ -7,14 +7,16 @@ body {
 
 .search-table-header {
     display: flex;
+    align-items: center;
 
     .ebay-logo {
         height: 90px;
     }
 
     .shopping-text {
-        font-size: 30px;
+        font-size: 38px;
         font-weight: bold;
+        margin: 0px;
     }
 }
 
@@ -62,6 +64,7 @@ button {
     border: 0;
     background-color: lightgray;
     border-radius: 4px;
+    padding: 4px;
 }
 
 button:hover {
@@ -171,8 +174,6 @@ select {
     align-items: center;
 
     .back-to-results{
-        width: 200px;
-        height: 20px;
         margin: 10px;
     }
 
