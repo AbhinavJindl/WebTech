@@ -1,9 +1,9 @@
-.nav-tabs {
-  border-bottom: none !important;
-  justify-content: center;
+.nav {
+  margin-bottom: 1.5rem !important;
+  margin-top: 1.5rem !important;
 }
 
-.nav-tabs .nav-link {
+.nav-item .nav-link {
   border: none;
   border-radius: 4px;
   background-color: white;
@@ -12,7 +12,11 @@
 }
 
 /* Styling for the active Tab */
-.nav-tabs .nav-link.active {
+.nav-item .nav-link.active {
   background-color: #000 !important; /* Even darker background color for the active tab */
   color: white !important;
+}
+
+.tab-content {
+  width: 100%;
 }

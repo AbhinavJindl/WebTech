@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Col, Row, Tabs, Tab, Container } from 'react-bootstrap';
+import { Form, Button, Col, Row, Tab, Container, Nav } from 'react-bootstrap';
 import { fetchItems } from '../Api';
 import styles from './styles.module.css';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import Wishlist from '../ItemsList/Wishlist';
 import { currentLocation, setClear } from '../features/resultsSlice';
 import './tabStyles.css'
 import { setDetailPageOpen } from '../features/itemDetailSlice';
+import ItemDetails from '../ItemDetail/ItemDetails';
 
 
 function ProductSearch(props) {
@@ -38,6 +39,7 @@ function ProductSearch(props) {
 
     function MyButtons() {
         function OnSubmitClick() {
+            setDetailPageOpen(false);
             let postalZip = currentLocation;
             if (fromWhere !== 'current') {
                 postalZip = zip;
@@ -48,6 +50,7 @@ function ProductSearch(props) {
         function OnClearClick() {
             setClear(true);
             resetForm();
+            setDetailPageOpen(false);
         }
 
         return (
@@ -206,6 +209,19 @@ function ProductSearch(props) {
         setDetailPageOpen(false);
     }
 
+    function NavItems() {
+        return (
+            <Nav variant="pills">
+                <Nav.Item>
+                    <Nav.Link eventKey="Results">Results</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link eventKey="Wish List">Wish List</Nav.Link>
+                </Nav.Item>
+            </Nav>
+        )
+    }
+
     return (
         <div className={styles.topContainer}>
             <div className={styles.productSearch}>
@@ -222,17 +238,20 @@ function ProductSearch(props) {
                     </Form>
                 </Container>
             </div>
-
             <div className={styles.tabsSection}>
-            <Tabs className="m-4">
-                <Tab onClick={closeDetailPage} eventKey="results" title="Results">
-                <ItemsList/>
-                </Tab>
-                <Tab onClick={closeDetailPage} eventKey="wishlist" title="Wish List">
-                <Wishlist/>
-                </Tab>
-            </Tabs>
+                <Tab.Container onSelect={closeDetailPage} defaultActiveKey="Results">
+                    {NavItems()}
+                    <Tab.Content>
+                        <Tab.Pane eventKey="Results">
+                            <ItemsList/>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="Wish List">
+                            <Wishlist/>
+                        </Tab.Pane>
+                    </Tab.Content>
+                </Tab.Container>
             </div>
+            <ItemDetails/>
         </div>
     );
 }

@@ -10,6 +10,7 @@ export const resultsSlice = createSlice({
     resultsActiveTab: true,
     currentLocation: "90007",
     isClear: true,
+    isLoading: false,
   },
   reducers: {
     setItems: (state, action) => {
@@ -44,6 +45,9 @@ export const resultsSlice = createSlice({
     setPage: (state, action) => {
         state.pageNumber = action.payload ;
     },
+    setIsLoading: (state, action) => {
+        state.isLoading = action.payload;
+    },
     setClear: (state, action) => {
         if (action.payload) {
             state.isClear = true;
@@ -67,6 +71,7 @@ export const {
     unsetResultsTab,
     setCurrentLocation,
     setClear,
+    setIsLoading,
 } = resultsSlice.actions;
 export const items = state => state.results.items;
 export const wishlistItems = state => _.filter(state.results.wishlistItems, {'wishListed': true});
@@ -74,4 +79,5 @@ export const pageNumber = state => state.results.pageNumber;
 export const resultsActiveTab = state => state.results.resultsActiveTab;
 export const currentLocation = state => state.results.currentLocation;
 export const isClear = state => state.results.isClear;
+export const isLoading = state => state.results.isLoading;
 export default resultsSlice.reducer;

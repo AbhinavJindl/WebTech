@@ -5,6 +5,8 @@ export const itemDetailSlice = createSlice({
   initialState: {
     details: {},
     detailPageOpen: false,
+    similarPhotos: {},
+    similarProducts: {},
   },
 
   reducers: {
@@ -17,10 +19,23 @@ export const itemDetailSlice = createSlice({
             state.details = {};
         }
     },
+    setSimilarPhotos: (state, action) => {
+        state.similarPhotos = action.payload;
+    },
+    setSimilarProducts: (state, action) => {
+        state.similarProducts = action.payload;
+    },
   }
 });
 
-export const { setDetails, setDetailPageOpen } = itemDetailSlice.actions;
+export const { 
+    setDetails, 
+    setDetailPageOpen, 
+    setSimilarPhotos, 
+    setSimilarProducts, 
+} = itemDetailSlice.actions;
 export const details = state => state.itemDetail.details;
 export const isDetailPageOpen = state => state.itemDetail.detailPageOpen;
+export const similarPhotos = state => state.itemDetail.similarPhotos;
+export const similarProducts = state => state.itemDetail.similarProducts;
 export default itemDetailSlice.reducer;

@@ -2,12 +2,13 @@ import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import styles from './styles.module.css'
 import { connect } from 'react-redux';
-import { items, incrementPage, decrementPage, setPage, pageNumber, isClear } from '../features/resultsSlice';
+import { items, incrementPage, decrementPage, setPage, pageNumber, isClear, isLoading } from '../features/resultsSlice';
 import ItemsTable from './itemsTable';
 import { isDetailPageOpen } from '../features/itemDetailSlice';
+import ProgressBarComponent from '../ProgressBar';
 
 const ProductList = (props) => {
-  const {isClear, items, onDecrementPage, onIncrementPage, onSetPage, pageNumber, isDetailPageOpen} = props;
+  const {isLoading, isClear, items, onDecrementPage, onIncrementPage, onSetPage, pageNumber, isDetailPageOpen} = props;
 
   const totalPages = () => {
     return Math.ceil(items.length/10);
@@ -45,6 +46,10 @@ const ProductList = (props) => {
     return null
   }
 
+  if (isLoading) {
+    return <ProgressBarComponent/>
+  }
+
   return (
     <div className={styles.tableContainer}>
       <div className={styles.itemsListContainer}>
@@ -63,6 +68,7 @@ const mapStateToProps = state => ({
     pageNumber: pageNumber(state),
     isDetailPageOpen: isDetailPageOpen(state),
     isClear: isClear(state),
+    isLoading: isLoading(state),
 });
   
 const mapDispatchToProps = dispatch => ({

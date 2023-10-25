@@ -1,0 +1,22 @@
+.row-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: white;
+}
+
+.row-container .row:nth-child(odd) {
+    background-color: #212529;
+}
+
+.row-container .row:nth-child(even) {
+    background-color: #2c3034;
+}
+
+.table-key {
+    font-weight: bold;
+}
+
+.margin-row {
+    padding-top: 3px;
+}
