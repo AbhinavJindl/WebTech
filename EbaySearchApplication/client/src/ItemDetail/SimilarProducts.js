@@ -2,10 +2,15 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import './rowsStyles.css';
 import CircularProgressBar from './circularProgress';
+import NoRecordsAlert from '../NoRecordsAlert';
 const _ = require('lodash');
 
 const SimilarProducts = (props) => {
   const {item, similarProducts} = props;
+
+  if (similarProducts.length === 0){
+    return <NoRecordsAlert/>
+  }
 
   const getTick = () => {
     return (

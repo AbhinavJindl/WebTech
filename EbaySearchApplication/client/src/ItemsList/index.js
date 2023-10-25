@@ -6,6 +6,7 @@ import { items, incrementPage, decrementPage, setPage, pageNumber, isClear, isLo
 import ItemsTable from './itemsTable';
 import { isDetailPageOpen } from '../features/itemDetailSlice';
 import ProgressBarComponent from '../ProgressBar';
+import NoRecordsAlert from '../NoRecordsAlert';
 
 const ProductList = (props) => {
   const {isLoading, isClear, items, onDecrementPage, onIncrementPage, onSetPage, pageNumber, isDetailPageOpen} = props;
@@ -48,6 +49,10 @@ const ProductList = (props) => {
 
   if (isLoading) {
     return <ProgressBarComponent/>
+  }
+
+  if (items.length === 0) {
+    return <NoRecordsAlert/>
   }
 
   return (
