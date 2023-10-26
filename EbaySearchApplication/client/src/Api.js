@@ -1,7 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import { store } from './store';
-import { setIsLoading, setClear,setCurrentLocation, setItems, setWishlistItems, updateWishlistItem} from './features/resultsSlice';
+import { setIsLoading, setClear,setCurrentLocation, setItems, setWishlistItems, updateWishlistItem, setSuggestions} from './features/resultsSlice';
 import { setDetailPageOpen, setDetails, setSimilarPhotos, setSimilarProducts } from './features/itemDetailSlice';
 const _ = require('lodash');
 
@@ -11,10 +11,31 @@ const API_ENDPOINTS = {
     'IP_INFO': 'https://ipinfo.io/json?token=012967d69bb58a',
     'GET_ITEMS': `${HOST}ebay/find_items_advanced?`,
     'ITEM_DETAIL': `${HOST}ebay/get_single_item?`,
-    'GEONAMES': `${HOST}geonames?initialString={initialString}`,
-    'GET_SIMILAR_ITEMS': `${HOST}ebay/get_similar_items?itemId={itemId}`,
+    'GEONAMES': `${HOST}geonames?`,
+    'GET_SIMILAR_ITEMS': `${HOST}ebay/get_similar_items?`,
     'SIMILAR_PHOTOS': `${HOST}google/similar_photos?`,
     'WISHLIST': `${HOST}items`,
+}
+
+
+export const zipValidator = (val) => {
+    return (val.trim() !== ""  && val.trim().length <= 5 && /^\d+$/.test(val))
+}
+
+export const fetchSuggestions = async (initialString) => {
+    try {
+        if (!(zipValidator(initialString)) || initialString.length === 5) {
+            store.dispatch(setSuggestions([]));
+            return
+        }
+        let url = API_ENDPOINTS.GEONAMES;
+        url  = add_param(url, 'initialString', initialString)
+        const response = await axios.get(url);
+        let suggestions = _.map(_.get(response.data, "postalCodes", []), itm => _.get(itm, "postalCode", null));
+        store.dispatch(setSuggestions(_.filter(suggestions, (it) => it!==null)));
+    } catch (error) {
+        console.error("Error fetching geonames:", error);
+    }
 }
 
 export const fetchSimilarProducts = async (itemId) => {
@@ -22,7 +43,7 @@ export const fetchSimilarProducts = async (itemId) => {
         let url = API_ENDPOINTS.GET_SIMILAR_ITEMS;
         url  = add_param(url,'itemId', itemId)
         const response = await axios.get(url);
-        store.dispatch(setSimilarProducts(_.get(response.data, ['itemRecommendations', 'item'], [])));
+        store.dispatch(setSimilarProducts(_.get(response.data, ['getSimilarItemsResponse', 'itemRecommendations', 'item'], [])));
     } catch (error) {
         console.error("Error fetching similar products:", error);
     }

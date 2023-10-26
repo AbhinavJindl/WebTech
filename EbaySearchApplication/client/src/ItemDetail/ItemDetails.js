@@ -57,7 +57,7 @@ const ItemDetails = (props) => {
                         <Seller item={item}/>
                     </Tab.Pane>
                     <Tab.Pane eventKey="SimilarProducts">
-                        <SimilarProducts similarProducts={similarProducts} item={item}/>
+                        <SimilarProducts similarProducts={similarProducts}/>
                     </Tab.Pane>
                 </Tab.Content>
             </Tab.Container>

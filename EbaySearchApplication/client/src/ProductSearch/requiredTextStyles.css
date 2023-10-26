@@ -1,0 +1,12 @@
+.form-control {
+    background-image: none !important;
+}
+
+.list-group-item {
+    border: 0 !important;
+}
+
+.list-group-item:hover {
+    background-color: lightgray;
+}
+

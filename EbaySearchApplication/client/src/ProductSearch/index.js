@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Button, Col, Row, Tab, Container, Nav } from 'react-bootstrap';
-import { fetchItems } from '../Api';
+import { fetchItems, fetchSuggestions, zipValidator } from '../Api';
 import styles from './styles.module.css';
 import { useState } from 'react';
 import ItemsList from '../ItemsList';
 import Wishlist from '../ItemsList/Wishlist';
-import { currentLocation, setClear } from '../features/resultsSlice';
+import { currentLocation, setClear, suggestions } from '../features/resultsSlice';
 import './tabStyles.css'
 import { setDetailPageOpen } from '../features/itemDetailSlice';
 import ItemDetails from '../ItemDetail/ItemDetails';
+import RequiredText from './RequiredText';
 
 
 function ProductSearch(props) {
-    const {currentLocation, setClear, setDetailPageOpen} = props;
+    const {currentLocation, setClear, setDetailPageOpen, suggestions} = props;
     const [keywords, setKeywords] = useState('');
     const [category, setCategory] = useState('0');
     const [conditionNew, setConditionNew] = useState(false);
@@ -85,15 +86,22 @@ function ProductSearch(props) {
     }
 
     function KeywordsField() {
-        const keywordChange = (e) => {
-            setKeywords(e.target.value);
+        const keywordChange = (val) => {
+            setKeywords(val);
         }
 
         return (
             <Row className='mb-3'>
-                <Form.Label column sm={3}>Keyword*</Form.Label>
+                <Form.Label column sm={3}>Keyword<span style={{'color': 'red'}}>*</span></Form.Label>
                 <Col sm={8}>
-                <Form.Control onChange={keywordChange} value={keywords} type="text" placeholder="Enter Product Name (e.g. iPhone 8)" />
+                    <RequiredText 
+                        value={keywords} 
+                        onValueChange={keywordChange} 
+                        validator={(val) => {return (val.trim() !== "")}}
+                        errorMessage={"Please enter a keyword."}
+                        placeholderText={"Enter Product Name (e.g. iPhone 8)"}
+                        disabled={false}
+                    />
                 </Col>
             </Row>
         )
@@ -107,7 +115,7 @@ function ProductSearch(props) {
         return (
             <Row className='mb-3'>
                 <Form.Label column sm={3}>Category</Form.Label>
-                <Col sm={3}>
+                <Col sm={2}>
                 <Form.Control as="select" value={category} onChange={categoryChange}>
                     <option value="0">All Categories</option>
                     <option value="550">Art</option>
@@ -187,19 +195,31 @@ function ProductSearch(props) {
     function Location() {
         const fromWhereChange = (e) => {
             setFromWhere(e.target.value);
+            if (e.target.value === 'current') {
+                setZip('')
+            }
         }
 
-        const zipChange = (e) => {
-            setZip(e.target.value);
+        const zipChange = (val) => {
+            setZip(val);
+            fetchSuggestions(val);
         }
         
         return (
             <Row className='mb-3'>
-                <Form.Label column sm={3}>From*</Form.Label>
+                <Form.Label column sm={3}>From<span style={{'color': 'red'}}>*</span></Form.Label>
                 <Col sm={8}>
                     <Form.Check onChange={fromWhereChange} checked={fromWhere === 'current'} value='current' type="radio" label="'Current Location'" name="location" id="locationCurrent" />
                     <Form.Check onChange={fromWhereChange} checked={fromWhere !== 'current'} value='other' className="col-sm-5" type="radio" label="Other. Please specify zip code:" name="location" id="locationOther" />
-                    <Form.Control type="text" disabled={fromWhere==='current'} onChange={zipChange}/>
+                    <RequiredText 
+                        value={zip} 
+                        onValueChange={zipChange} 
+                        validator={zipValidator}
+                        errorMessage={"Please enter a zip code."}
+                        placeholderText={""}
+                        disabled={fromWhere==='current'}
+                        suggestions={suggestions}
+                    />
                 </Col>
             </Row>
         )
@@ -258,6 +278,7 @@ function ProductSearch(props) {
 
 const mapStateToProps = state => ({
     currentLocation: currentLocation(state),
+    suggestions: suggestions(state),
 });
   
 const mapDispatchToProps = dispatch => ({

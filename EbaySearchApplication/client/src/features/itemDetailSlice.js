@@ -6,7 +6,7 @@ export const itemDetailSlice = createSlice({
     details: {},
     detailPageOpen: false,
     similarPhotos: {},
-    similarProducts: {},
+    similarProducts: [],
   },
 
   reducers: {

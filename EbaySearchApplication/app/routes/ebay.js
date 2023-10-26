@@ -9,7 +9,7 @@ const APP_SECRET = "PRD-728e27357d6a-d19f-4efd-a790-d224"
 
 const ITEMS_URL = `https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsAdvanced&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=${APP_ID}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&paginationInput.entriesPerPage=50`
 const SINGLE_ITEM_URL = `https://open.api.ebay.com/shopping?callname=GetSingleItem&responseencoding=JSON&appid=${APP_ID}&siteId=0&version=967&IncludeSelector=Description,Details,ItemSpecifics`
-const SIMILAR_ITEM_URL = `https://svcs.ebay.com/MerchandisingService?OPERATION-NAME=getSimilarItems&SERVICE-NAME=MerchandisingService&SERVICE-VERSION=1.1.0&CONSUMER-ID=${APP_ID}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&maxResults=20&itemId=394884844909`
+const SIMILAR_ITEM_URL = `https://svcs.ebay.com/MerchandisingService?OPERATION-NAME=getSimilarItems&SERVICE-NAME=MerchandisingService&SERVICE-VERSION=1.1.0&CONSUMER-ID=${APP_ID}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&maxResults=20`
 
 function add_param(url, key, value) {
     return `${url}&${key}=${value}`
@@ -108,6 +108,7 @@ router.get('/get_single_item', async (req, res) => {
 router.get('/get_similar_items', async (req, res) => {
     try {
         const similar_item_url = `${SIMILAR_ITEM_URL}&itemId=${req.query.itemId}`
+        console.error(similar_item_url)
         const response = await axios.get(similar_item_url);
         res.send(response.data);
     } catch (error) {
