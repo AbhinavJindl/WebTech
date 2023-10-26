@@ -34,7 +34,7 @@ export const resultsSlice = createSlice({
         if (idx !== -1) {
             state.wishlistItems[idx] = action.payload;
         } else {
-            state.wishlistItems.append(action.payload);
+            state.wishlistItems.push(action.payload);
         }
     },
     incrementPage: state => {

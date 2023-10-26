@@ -19,11 +19,30 @@ const ItemsTable = (props) => {
   const cartIcon = (productId) => {
      if (wishlistItems.find(item => item.itemId === productId)) {
         return (
-            <i className="material-icons-outlined" onClick={onCartClick(productId)}>remove_shopping_cart</i>
+            <i 
+              className="material-icons-outlined" 
+              onClick={onCartClick(productId)} 
+              style={{'color': '#ff9200b8',
+                    'background': 'white',
+                    'padding': '2px 6px',
+                    'border-radius': '3px'}}
+            >
+              remove_shopping_cart
+            </i>
         )
      }
 
-     return (<i className="material-icons-outlined" onClick={onCartClick(productId)}>add_shopping_cart</i>)
+     return (
+     <i 
+      className="material-icons-outlined" 
+      onClick={onCartClick(productId)}
+      style={{'color': 'black',
+                    'background': 'white',
+                    'padding': '2px 6px',
+                    'border-radius': '3px'}}
+      >
+        add_shopping_cart
+      </i>)
   }
 
   const zipHeader = () => {
