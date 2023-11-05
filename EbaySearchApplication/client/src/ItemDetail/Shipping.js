@@ -5,17 +5,23 @@ import './rowsStyles.css';
 const _ = require('lodash');
 
 const Shipping = (props) => {
-  const {item, items} = props;
+  const {item, items, wishlistItems} = props;
 
   const getItemFromList = () => {
-    return _.find(items, {'itemId': item.ItemID});
+    const itemFromItems =  _.find(items, {'itemId': item.ItemID});
+    if (itemFromItems) {
+        return itemFromItems
+    }
+    const itemFromWishlist =  _.find(wishlistItems, {'itemId': item.ItemID});
+    if (itemFromWishlist) {
+        return itemFromWishlist
+    }
+
+    throw Error("Item not found in all items list");
   }
 
   const getCurrentItemShippingInfo = () => {
     const foundItem = getItemFromList();
-    if (!foundItem) {
-        throw Error("Item not found in all items list");
-    }
     return _.get(foundItem, ['shippingInfo', 0], {})
   }
 

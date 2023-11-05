@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button , Carousel} from 'react-bootstrap';
 import './rowsStyles.css';
 const _ = require('lodash');
 
@@ -8,56 +8,39 @@ const Product = (props) => {
   const {item} = props;
 
   const [showImages, setShowImages] = useState(false);
-  const [imageNumber, setImageNumber] = useState(0);
   const handleCloseImages = () => {
-    setImageNumber(0);
     setShowImages(false);
   }
   const handleShowImages = () => {
-    setImageNumber(0);
     setShowImages(true);
   }
 
   const imagesModal = () => {
     const imagesUrls = _.get(item, 'PictureURL', [])
-    function nextImagePresent() {
-        return imageNumber < imagesUrls.length-1;
-    }
-    function prevImagePresent() {
-        return imageNumber > 0;
-    }
-    function changeNextImage() {
-        if (!nextImagePresent()) {
-            return
-        }
-        setImageNumber(imageNumber + 1);
-    }
-    function changePrevImage() {
-        if (!prevImagePresent()) {
-            return
-        }
-        setImageNumber(imageNumber - 1);
-    }
 
     return (
         <Modal show={showImages} onHide={handleCloseImages} centered size="sm">
+            <Modal.Header closeButton>
+                <Modal.Title>Product Images</Modal.Title>
+            </Modal.Header>
             <Modal.Body>
-            <Row>
-                <Col xs={1} className="text-center">
-                    <Button variant="link" disabled={!prevImagePresent()} onClick={changePrevImage}>&lt;</Button>
-                </Col>
-                <Col xs={10}>
-                    <img src={imagesUrls[imageNumber]} alt="Product" className="img-fluid" />
-                </Col>
-                <Col xs={1} className="text-center">
-                    <Button variant="link" onClick={changeNextImage} disabled={!nextImagePresent()}>&gt;</Button>
-                </Col>
-            </Row>
+            <Carousel 
+            interval={null} 
+            indicators={false} 
+            nextIcon={<span aria-hidden="true" className="prevNextImageButton carousel-control-next-icon bg-dark"/>} 
+            prevIcon={<span aria-hidden="true" className="prevNextImageButton carousel-control-prev-icon bg-dark"/>}
+            >
+                {imagesUrls.map((img, index) => (
+                    <Carousel.Item key={index}>
+                    <img src={img} alt="Product" className="img-fluid d-block" />
+                    </Carousel.Item>
+                ))}
+            </Carousel>
             </Modal.Body>
             <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseImages}>
-                Close
-            </Button>
+                <Button variant="secondary" onClick={handleCloseImages}>
+                    Close
+                </Button>
             </Modal.Footer>
         </Modal>
     )

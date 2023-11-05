@@ -1,16 +1,21 @@
 import React from 'react';
-import { Table} from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getSingleItem } from '../Api';
 import './tableStyles.css';
 import CartIcon from './cartIcon';
+import { details, setDetailPageOpen } from '../features/itemDetailSlice';
 const _ = require('lodash');
 
 const ItemsTable = (props) => {
-  const {items, isWishlistTab, offset} = props;
+  const {items, isWishlistTab, offset, setDetailPageOpen, itemDetail} = props;
 
   const onSpecificProductClick = (productId) => (e) => {
     getSingleItem(productId);
+  }
+
+  const detailItemId = () => {
+    return _.get(itemDetail, 'ItemID', null)
   }
 
   const zipHeader = () => {
@@ -48,6 +53,9 @@ const ItemsTable = (props) => {
 
   return (
     <>
+      <Button disabled={detailItemId() === null} style={{"width": "7em", "float": "right", "margin-bottom": "10px"}} onClick={() => setDetailPageOpen(true)} className={`btn-spacing mr-5 btn-light btm-sm text-dark`}>
+          {"Detail >"}
+      </Button>
       <Table hover className="table-dark table-striped">
         <thead>
           <tr>
@@ -87,9 +95,11 @@ const ItemsTable = (props) => {
 };
 
 const mapStateToProps = state => ({
+  itemDetail: details(state),
 });
   
 const mapDispatchToProps = dispatch => ({
+  setDetailPageOpen: (val) => dispatch(setDetailPageOpen(val)),
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(ItemsTable);

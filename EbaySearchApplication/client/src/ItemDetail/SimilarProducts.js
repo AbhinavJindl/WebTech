@@ -59,6 +59,9 @@ const SimilarProducts = (props) => {
     }
 
     const handleSort = (key, order) => {
+        if (key === 'default') {
+            order = 'ascending';
+        }
         let sortedProducts = [...getItems(similarProducts)];
         switch(key) {
             case 'default':
@@ -90,59 +93,64 @@ const SimilarProducts = (props) => {
         setProductsList(sortedProducts);
     };
 
+    const sortKeyToText = {
+        "default": "Default",
+        "productName": "Product Name",
+        "daysLeft": "Days Left",
+        "price": "Price",
+        "shippingCost": "Shipping Cost",
+    }
+
+    const sortOrderToText = {
+        "ascending": "Ascending",
+        "descending": "Descending",
+    }
+
     return (
         <Container>
-            <Row>
-                <Col sm={3}>
-                    <select value="default">
-                        <option value="default">Default</option>
-                        <option value="default">Default</option>
-                        <option value="default">Default</option>
-                    </select>
-                    <Dropdown data-bs-theme="light">
-                        <Dropdown.Toggle>
-                            Key
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleSort('default', sortOrder)}>Default</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort('productName', sortOrder)}>Product Name</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort('daysLeft', sortOrder)}>Days Left</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort('price', sortOrder)}>Price</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort('shippingCost', sortOrder)}>Shipping Cost</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
-                <Col sm={3}>
-                    <Dropdown>
-                        <Dropdown.Toggle>
-                            Order
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleSort(sortKey, 'ascending')}>Ascending</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort(sortKey, 'descending')}>Descending</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Col>
-            </Row> 
+            <div className='similar-products-dropdown-header'>
+                <Dropdown className='mr-2'>
+                    <Dropdown.Toggle variant="light" className="dropdown-sort-field">
+                        {sortKeyToText[sortKey]}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {_.map(
+                            Object.keys(sortKeyToText),
+                            (o, idx) => (<Dropdown.Item onClick={() => handleSort(o, sortOrder)}>{sortKeyToText[o]}</Dropdown.Item>)
+                        )}
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown>
+                    <Dropdown.Toggle variant="light" className="dropdown-sort-field" disabled={sortKey === 'default'}>
+                        {sortOrderToText[sortOrder]}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {_.map(
+                            Object.keys(sortOrderToText),
+                            (o, idx) => (<Dropdown.Item onClick={() => handleSort(sortKey, o)}>{sortOrderToText[o]}</Dropdown.Item>)
+                        )}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
           {currentProductsList.map((product, index) => {
             if (showMore || index < 5) {
                 return (
-                    <Card className="mb-4" key={index}>
+                    <Card className="mb-4 bg-dark text-white" key={index}>
                     <Row noGutters>
                         <Col sm={3}>
-                        <Card.Img variant="top" src={product.image} />
+                            <Card.Img variant="top" src={product.image} />
                         </Col>
                         <Col sm={9}>
                         <Card.Body>
-                            <Card.Title>{product.title}</Card.Title>
+                            <Card.Text>{product.title}</Card.Text>
                             <Card.Text>
-                            Price: {product.price}
+                                Price: {product.price}
                             </Card.Text>
                             <Card.Text>
-                            Shipping Cost: {product.shipping}
+                                Shipping Cost: {product.shipping}
                             </Card.Text>
                             <Card.Text>
-                            Days Left: {product.days}
+                                Days Left: {product.days}
                             </Card.Text>
                         </Card.Body>
                         </Col>

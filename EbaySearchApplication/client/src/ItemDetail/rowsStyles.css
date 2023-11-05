@@ -20,3 +20,36 @@
 .margin-row {
     padding-top: 3px;
 }
+
+.prevNextImageButton {
+    scale: 0.5;
+}
+
+.dropdown-toggle {
+    color: black !important; /* Sets the text color */
+    background-color: white !important; /* Sets the background color */
+    border-color: #ced4da !important; /* Sets the border color */
+  }
+  
+/* Adjust the border radius for the left side dropdown */
+/* .dropdown-sort-field {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+} */
+
+/* Adjust the border radius for the right side dropdown */
+.dropdown-sort-field {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+/* Optional: remove the right border of the first dropdown to make them look unified */
+.dropdown-sort-field .dropdown-toggle {
+    border-right: none !important;
+}
+
+.similar-products-dropdown-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}

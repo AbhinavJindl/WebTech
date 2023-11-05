@@ -57,12 +57,11 @@ const ProductList = (props) => {
 
   return (
     <div className={styles.tableContainer}>
-      <div className={styles.itemsListContainer}>
-        <ItemsTable 
-          items={getCurrentPageItems()} 
-          isWishlistTab={false}
-          offset={(pageNumber-1)*10}/>
-      </div>
+      <ItemsTable
+        items={getCurrentPageItems()} 
+        isWishlistTab={false}
+        offset={(pageNumber-1)*10}
+      />
       {paginationPages()}
     </div>
   );

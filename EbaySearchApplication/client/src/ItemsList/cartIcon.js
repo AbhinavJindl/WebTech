@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { wishlistItems } from '../features/resultsSlice';
 import { updateWishListItem } from '../Api';
 import './tableStyles.css';
-const _ = require('lodash');
 
 const CartIcon = (props) => {
     const {wishlistItems, productId} = props;
@@ -11,17 +10,26 @@ const CartIcon = (props) => {
     const onCartClick = (e) => {
         updateWishListItem(productId);
     }
+
+    let cartStyle = {
+        'color': 'black',
+        'background': '#f8f9fa',
+        'padding': '2px 6px',
+        'border-radius': '3px',
+        'align-items': 'center',
+        'display': 'flex',
+        'width': '40px',
+        'justify-content': 'center',
+    }
     
     const cartIcon = () => {
         if (wishlistItems.find(item => item.itemId === productId)) {
+            cartStyle['color'] = 'orange';
             return (
                 <i 
                     className="material-icons-outlined" 
                     onClick={onCartClick} 
-                    style={{'color': '#ff9200b8',
-                        'background': 'white',
-                        'padding': '2px 6px',
-                        'border-radius': '3px'}}
+                    style={cartStyle}
                 >
                     remove_shopping_cart
                 </i>
@@ -32,10 +40,7 @@ const CartIcon = (props) => {
             <i 
             className="material-icons-outlined" 
             onClick={onCartClick}
-            style={{'color': 'black',
-                    'background': 'white',
-                    'padding': '2px 6px',
-                    'border-radius': '3px'}}
+            style={cartStyle}
             >
                 add_shopping_cart
             </i>

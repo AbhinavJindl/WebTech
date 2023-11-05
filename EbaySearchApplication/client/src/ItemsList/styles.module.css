@@ -1,8 +1,4 @@
 .tableContainer {
-    .itemsListContainer {
-        background-color: black;
-        color: white;
-    }
 
     .paginationContainer {
         display: flex;

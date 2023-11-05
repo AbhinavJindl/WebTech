@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import styles from './styles.module.css'
 import { connect } from 'react-redux';
-import { items, isClear, isLoading } from '../features/resultsSlice';
+import { items, isClear, isLoading, wishlistItems } from '../features/resultsSlice';
 import { details, isDetailPageOpen, setDetailPageOpen, similarPhotos, similarProducts } from '../features/itemDetailSlice';
 import Product from './Product';
 import { Tab, Nav, Container, Row, Button } from 'react-bootstrap';
@@ -11,9 +11,10 @@ import Shipping from './Shipping';
 import Seller from './Seller';
 import SimilarProducts from './SimilarProducts';
 import CartIcon from '../ItemsList/cartIcon';
+const _ = require('lodash')
 
 const ItemDetails = (props) => {
-  const {similarProducts, isClear, items, item, isDetailPageOpen, setDetailPageOpen, isLoading, similarPhotos} = props;
+  const {similarProducts, isClear, items, item, isDetailPageOpen, setDetailPageOpen, isLoading, similarPhotos, wishlistItems} = props;
 
   useEffect(() => {
     window.fbAsyncInit = function() {
@@ -46,7 +47,7 @@ const ItemDetails = (props) => {
         window.FB.ui({
             method: 'share',
             href: item.ViewItemURLForNaturalSearch,
-            quote: `Buy ${item.Title} at ${item.BuyItNowPrice.Value} from ${item.ViewItemURLForNaturalSearch} below.`,
+            quote: `Buy ${item.Title} at ${_.get(item, ['BuyItNowPrice', 'Value'], null)} from ${item.ViewItemURLForNaturalSearch} below.`,
         },
         function(response) {
             // if (response && !response.error_message) {
@@ -102,7 +103,7 @@ const ItemDetails = (props) => {
                         <Photos item={item} similarPhotos={similarPhotos}/>
                     </Tab.Pane>
                     <Tab.Pane eventKey="Shipping">
-                        <Shipping items={items} item={item}/>
+                        <Shipping items={items} item={item} wishlistItems={wishlistItems}/>
                     </Tab.Pane>
                     <Tab.Pane eventKey="Seller">
                         <Seller item={item}/>
@@ -119,6 +120,7 @@ const ItemDetails = (props) => {
 
 const mapStateToProps = state => ({
     items: items(state),
+    wishlistItems: wishlistItems(state),
     item: details(state),
     isDetailPageOpen: isDetailPageOpen(state),
     isClear: isClear(state),
