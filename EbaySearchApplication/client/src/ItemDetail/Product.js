@@ -119,7 +119,7 @@ const Product = (props) => {
         {getReturnPolicy()}
 
         {get_item_specifics().map((nameValue, index) => (
-            <Row className='p-2'>
+            <Row className='p-2' index={index}>
                 <Col className='table-key' sm={4}>{_.get(nameValue, 'Name')}</Col>
                 <Col sm={8}>{_.get(nameValue, ['Value', 0])}</Col>
             </Row>

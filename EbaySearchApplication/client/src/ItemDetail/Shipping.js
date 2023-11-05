@@ -5,24 +5,10 @@ import './rowsStyles.css';
 const _ = require('lodash');
 
 const Shipping = (props) => {
-  const {item, items, wishlistItems} = props;
-
-  const getItemFromList = () => {
-    const itemFromItems =  _.find(items, {'itemId': item.ItemID});
-    if (itemFromItems) {
-        return itemFromItems
-    }
-    const itemFromWishlist =  _.find(wishlistItems, {'itemId': item.ItemID});
-    if (itemFromWishlist) {
-        return itemFromWishlist
-    }
-
-    throw Error("Item not found in all items list");
-  }
+  const {item} = props;
 
   const getCurrentItemShippingInfo = () => {
-    const foundItem = getItemFromList();
-    return _.get(foundItem, ['shippingInfo', 0], {})
+    return _.get(item, 'shippingInfo', {})
   }
 
   const getTick = () => {
@@ -145,8 +131,7 @@ const Shipping = (props) => {
   }
 
   const returnAccepted = () => {
-    const foundItem = getItemFromList();
-    let ret = _.get(foundItem, ["returnsAccepted", 0], null)
+    const ret = _.get(item, "returnsAccepted", null)
     if (!ret) {
         return null
     }

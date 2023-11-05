@@ -73,7 +73,9 @@ const ItemsTable = (props) => {
             <tr key={index}>
               <td>{offset + index+1}</td>
               <td>
-                <img src={product.galleryURL[0]} alt={product.title} width={50}/>
+                <a href={product.galleryURL[0]} target='_blank' rel="noreferrer">
+                  <img src={product.galleryURL[0]} alt={product.title} width={100} height={100}/>
+                </a>
               </td>
               <td>
                 <span title={product.title[0]} className='title-link' onClick={onSpecificProductClick(product.itemId)}>

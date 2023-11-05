@@ -93,6 +93,25 @@ export const updateWishListItem = async (itemId) => {
     }
 }
 
+
+const getItemFromList = (itemId) => {
+    const itemFromItems =  _.find(store.getState().results.items, {'itemId': itemId});
+    if (itemFromItems) {
+        return itemFromItems
+    }
+    const itemFromWishlist =  _.find(store.getState().results.wishlistItems, {'itemId': itemId});
+    if (itemFromWishlist) {
+        return itemFromWishlist
+    }
+
+    throw Error("Item not found in all items list");
+}
+
+const getCurrentItemShippingInfo = (itemId) => {
+    const foundItem = getItemFromList(itemId);
+    return _.get(foundItem, ['shippingInfo', 0], {})
+}
+
 export const fetchItems = async (keywords, postalCode, maxDistance, categoryId, freeShipping, localPickup, conditionNew, conditionUsed) => {
     try {
         store.dispatch(setClear(false));
@@ -122,7 +141,11 @@ export async function getSingleItem(itemId) {
         store.dispatch(setDetailPageOpen(true));
         let url = add_param(API_ENDPOINTS.ITEM_DETAIL, 'itemId', itemId);
         const response = await axios.get(url);
-        store.dispatch(setDetails(_.get(response.data, 'Item', {})));
+        const detailData = _.get(response.data, 'Item', {});
+        detailData['shippingInfo'] = getCurrentItemShippingInfo(itemId);
+        const foundItem = getItemFromList(itemId);
+        detailData['returnsAccepted'] = _.get(foundItem, ["returnsAccepted", 0], null)
+        store.dispatch(setDetails(detailData));
         store.dispatch(setIsLoading(false));
         let itemTitle = _.get(response.data, ['Item', 'Title'], '');
         itemTitle = itemTitle.replace(/[^_ a-zA-Z0-9]/g, '');
