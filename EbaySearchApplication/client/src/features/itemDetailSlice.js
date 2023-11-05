@@ -15,9 +15,6 @@ export const itemDetailSlice = createSlice({
     },
     setDetailPageOpen: (state, action) => {
         state.detailPageOpen = action.payload
-        if (!action.payload) {
-            state.details = {};
-        }
     },
     setSimilarPhotos: (state, action) => {
         state.similarPhotos = action.payload;

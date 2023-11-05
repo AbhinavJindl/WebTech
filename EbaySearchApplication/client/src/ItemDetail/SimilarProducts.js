@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Card, Container, Row, Col, Dropdown } from 'react-bootstrap';
+import { Card, Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 import './rowsStyles.css';
 import NoRecordsAlert from '../NoRecordsAlert';
 const _ = require('lodash');
@@ -33,6 +33,7 @@ const SimilarProducts = (props) => {
     const [currentProductsList, setProductsList] = useState(similarProducts);
     const [sortKey, setSortKey] = useState('default');
     const [sortOrder, setSortOrder] = useState('ascending');
+    const [showMore, setShowMore] = useState(false);
 
     useEffect(() => {
         setProductsList(getItems(similarProducts));
@@ -40,6 +41,21 @@ const SimilarProducts = (props) => {
 
     if (similarProducts.length === 0){
         return <NoRecordsAlert/>
+    }
+
+    const getShowMoreButton =  () => {
+        let text = "Show More";
+        let f = () => {setShowMore(true)}
+        if (showMore) {
+            text = "Show Less";
+            f = () => {setShowMore(false)}
+        }
+        return (
+            <Row className="justify-content-center">
+            <Button variant="dark" className="text-white" style={{ width: '130px' }} onClick={f}>{text}</Button>
+            </Row>
+        )
+
     }
 
     const handleSort = (key, order) => {
@@ -107,31 +123,37 @@ const SimilarProducts = (props) => {
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>
-                
-            </Row>
-          {currentProductsList.map((product, index) => (
-            <Card className="mb-4" key={index}>
-              <Row noGutters>
-                <Col sm={3}>
-                  <Card.Img variant="top" src={product.image} />
-                </Col>
-                <Col sm={9}>
-                  <Card.Body>
-                    <Card.Title>{product.title}</Card.Title>
-                    <Card.Text>
-                      Price: {product.price}
-                    </Card.Text>
-                    <Card.Text>
-                      Shipping Cost: {product.shipping}
-                    </Card.Text>
-                    <Card.Text>
-                      Days Left: {product.days}
-                    </Card.Text>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          ))}
+            </Row> 
+          {currentProductsList.map((product, index) => {
+            if (showMore || index < 5) {
+                return (
+                    <Card className="mb-4" key={index}>
+                    <Row noGutters>
+                        <Col sm={3}>
+                        <Card.Img variant="top" src={product.image} />
+                        </Col>
+                        <Col sm={9}>
+                        <Card.Body>
+                            <Card.Title>{product.title}</Card.Title>
+                            <Card.Text>
+                            Price: {product.price}
+                            </Card.Text>
+                            <Card.Text>
+                            Shipping Cost: {product.shipping}
+                            </Card.Text>
+                            <Card.Text>
+                            Days Left: {product.days}
+                            </Card.Text>
+                        </Card.Body>
+                        </Col>
+                    </Row>
+                    </Card>
+                )
+            } else {
+                return (<></>)
+            }
+        })}
+        {getShowMoreButton()}
         </Container>
       );
 };

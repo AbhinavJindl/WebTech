@@ -1,7 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import { store } from './store';
-import { setIsLoading, setClear,setCurrentLocation, setItems, setWishlistItems, updateWishlistItem, setSuggestions} from './features/resultsSlice';
+import { setIsLoading, setClear,setCurrentLocation, setItems, setWishlistItems, updateWishlistItemState, setSuggestions} from './features/resultsSlice';
 import { setDetailPageOpen, setDetails, setSimilarPhotos, setSimilarProducts } from './features/itemDetailSlice';
 const _ = require('lodash');
 
@@ -87,7 +87,7 @@ export const updateWishListItem = async (itemId) => {
         }
         let url = API_ENDPOINTS.WISHLIST;
         const response = await axios.post(url, item);
-        store.dispatch(updateWishlistItem(response.data));
+        store.dispatch(updateWishlistItemState(response.data));
     } catch (error) {
         console.error("Error fetching wishlist items:", error);
     }

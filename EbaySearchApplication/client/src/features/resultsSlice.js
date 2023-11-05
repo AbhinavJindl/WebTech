@@ -29,7 +29,7 @@ export const resultsSlice = createSlice({
     unsetResultsTab: (state, action) => {
         state.resultsActiveTab = false;
     },
-    updateWishlistItem: (state, action) => {
+    updateWishlistItemState: (state, action) => {
         let idx = state.wishlistItems.findIndex(item => item.itemId === action.payload.itemId)
         if (idx !== -1) {
             state.wishlistItems[idx] = action.payload;
@@ -67,7 +67,7 @@ export const resultsSlice = createSlice({
 export const {
     setItems, 
     setWishlistItems, 
-    updateWishlistItem,
+    updateWishlistItemState,
     incrementPage, 
     decrementPage, 
     setPage, 

@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
             item.data = req.body;
             await item.save();
         }
-        res.status(201).send(req.body);
+        res.status(200).send(req.body);
     } catch (error) {
         console.error("Could not update item", error);
         res.status(400).send(error);

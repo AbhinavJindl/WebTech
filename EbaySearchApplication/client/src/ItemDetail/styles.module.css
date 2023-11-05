@@ -11,3 +11,19 @@
     }
     
 }
+
+.detailHeader {
+    .headerRow {
+        display: flex;
+        justify-content: space-between;
+
+        .rightHeaders {
+            display: flex;
+
+            .facebookIcon {
+                height: 40px;
+                margin-right: 10px;
+            }
+        }
+    }
+}

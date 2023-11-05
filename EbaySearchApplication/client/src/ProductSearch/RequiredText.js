@@ -3,18 +3,23 @@ import { Form, ListGroup } from 'react-bootstrap';
 import './requiredTextStyles.css';
 
 function RequiredText(props) {
-    const {validator, value, onValueChange, errorMessage, placeholderText, disabled, suggestions} = props
+    const {validator, value, onValueChange, errorMessage, placeholderText, disabled, suggestions, showError, changeShowError} = props
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (disabled) {
+        if (disabled || !showError) {
             setError(false);
+            if (validator(value)) {
+                setError(false);
+            }
         } else {
             if (!validator(value)) {
                 setError(true)
+            } else {
+                setError(false);
             }
         }
-    }, [disabled, value, validator]);
+    }, [disabled, value, validator, showError]);
 
     const checkAndSetError = (val) => {
         if (!validator(val)) {
@@ -24,8 +29,8 @@ function RequiredText(props) {
         }
     }
 
-    const onFocus = (e) => {
-        checkAndSetError(e.target.value)
+    const onBlur = (e) => {
+        changeShowError()
     }
 
     const onValChange = (val) => {
@@ -62,7 +67,7 @@ function RequiredText(props) {
                 type="text"
                 value={value} 
                 onChange={onChange}
-                onFocus={onFocus}
+                onBlur={onBlur}
                 isInvalid={error} 
                 placeholder={placeholderText} 
                 disabled={disabled}

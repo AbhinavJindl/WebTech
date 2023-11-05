@@ -1,18 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './styles.module.css'
 import { connect } from 'react-redux';
 import { items, isClear, isLoading } from '../features/resultsSlice';
-import { details, isDetailPageOpen, similarPhotos, similarProducts } from '../features/itemDetailSlice';
+import { details, isDetailPageOpen, setDetailPageOpen, similarPhotos, similarProducts } from '../features/itemDetailSlice';
 import Product from './Product';
-import { Tab, Nav } from 'react-bootstrap';
+import { Tab, Nav, Container, Row, Button } from 'react-bootstrap';
 import ProgressBarComponent from '../ProgressBar';
 import Photos from './Photos';
 import Shipping from './Shipping';
 import Seller from './Seller';
 import SimilarProducts from './SimilarProducts';
+import CartIcon from '../ItemsList/cartIcon';
 
 const ItemDetails = (props) => {
-  const {similarProducts, isClear, items, item, isDetailPageOpen, isLoading, similarPhotos} = props;
+  const {similarProducts, isClear, items, item, isDetailPageOpen, setDetailPageOpen, isLoading, similarPhotos} = props;
+
+  useEffect(() => {
+    window.fbAsyncInit = function() {
+        window.FB.init({
+            appId      : '629226582481731',
+            xfbml      : true,
+            version    : 'v12.0'
+        });
+        
+        window.FB.AppEvents.logPageView();
+    };
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+  }, []);
 
   if (isClear || !isDetailPageOpen) {
     return null
@@ -22,8 +42,39 @@ const ItemDetails = (props) => {
     return <ProgressBarComponent/>
   }
 
+  const shareOnFacebook = () => {
+        window.FB.ui({
+            method: 'share',
+            href: item.ViewItemURLForNaturalSearch,
+            quote: `Buy ${item.Title} at ${item.BuyItNowPrice.Value} from ${item.ViewItemURLForNaturalSearch} below.`,
+        },
+        function(response) {
+            // if (response && !response.error_message) {
+            //     alert('Successfully shared!');
+            // } else {
+            //     alert('Error while sharing!');
+            // }
+        });
+    }
+
+
+
   return (
     <div className={styles.tableContainer}>
+        <div className={styles.detailHeader}>
+            <Container>
+                <Row><h5>{item.Title}</h5></Row>
+                <div className={styles.headerRow}>
+                    <Button style={{"width": "5em"}} onClick={() => setDetailPageOpen(false)} className={`btn-spacing mr-5 btn-light btm-sm text-dark`}>
+                        {"< List"}
+                    </Button>
+                    <div className={styles.rightHeaders}>
+                        <img src={require("./facebook.png")} alt="Facebook" onClick={shareOnFacebook} className={styles.facebookIcon}/>
+                        <CartIcon productId={item.ItemID}/>
+                    </div>
+                </div>
+            </Container>
+        </div>
       <div className={styles.tabsSection}>
             <Tab.Container defaultActiveKey="Product">
                 <Nav variant="pills">
@@ -77,6 +128,7 @@ const mapStateToProps = state => ({
 });
   
 const mapDispatchToProps = dispatch => ({
+    setDetailPageOpen : (open) => dispatch(setDetailPageOpen(open)),
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(ItemDetails);

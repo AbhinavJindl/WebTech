@@ -1,48 +1,16 @@
 import React from 'react';
 import { Table} from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { wishlistItems } from '../features/resultsSlice';
-import { getSingleItem, updateWishListItem } from '../Api';
+import { getSingleItem } from '../Api';
+import './tableStyles.css';
+import CartIcon from './cartIcon';
 const _ = require('lodash');
 
 const ItemsTable = (props) => {
-  const {items, wishlistItems, isWishlistTab, offset} = props;
+  const {items, isWishlistTab, offset} = props;
 
   const onSpecificProductClick = (productId) => (e) => {
     getSingleItem(productId);
-  }
-
-  const onCartClick = (productId) => (e) => {
-    updateWishListItem(productId);
-  }
-
-  const cartIcon = (productId) => {
-     if (wishlistItems.find(item => item.itemId === productId)) {
-        return (
-            <i 
-              className="material-icons-outlined" 
-              onClick={onCartClick(productId)} 
-              style={{'color': '#ff9200b8',
-                    'background': 'white',
-                    'padding': '2px 6px',
-                    'border-radius': '3px'}}
-            >
-              remove_shopping_cart
-            </i>
-        )
-     }
-
-     return (
-     <i 
-      className="material-icons-outlined" 
-      onClick={onCartClick(productId)}
-      style={{'color': 'black',
-                    'background': 'white',
-                    'padding': '2px 6px',
-                    'border-radius': '3px'}}
-      >
-        add_shopping_cart
-      </i>)
   }
 
   const zipHeader = () => {
@@ -63,14 +31,29 @@ const ItemsTable = (props) => {
     )
   }
 
+  function shortenTitle(title) {
+    const maxLength = 35;
+    if (title.length > maxLength) {
+        let cutTitle = title.substring(0, maxLength);
+        const lastSpaceIndex = cutTitle.lastIndexOf(' ');
+        
+        if (lastSpaceIndex !== -1) {
+            cutTitle = cutTitle.substring(0, lastSpaceIndex);
+        }
+        
+        return cutTitle + '…';
+    }
+    return title;
+  }
+
   return (
     <>
       <Table hover className="table-dark table-striped">
         <thead>
           <tr>
-            <th style={{width:'10%'}}>#</th>
-            <th style={{width:'10%'}}>Image</th>
-            <th style={{width:'30%'}}>Title</th>
+            <th style={{width:'5%'}}>#</th>
+            <th style={{width:'15%'}}>Image</th>
+            <th>Title</th>
             <th style={{width:'10%'}}>Price</th>
             <th style={{width:'15%'}}>Shipping</th>
             {zipHeader()}            
@@ -85,15 +68,15 @@ const ItemsTable = (props) => {
                 <img src={product.galleryURL[0]} alt={product.title} width={50}/>
               </td>
               <td>
-                <span onClick={onSpecificProductClick(product.itemId)}>
-                    {product.title}
+                <span title={product.title[0]} className='title-link' onClick={onSpecificProductClick(product.itemId)}>
+                    {shortenTitle(product.title[0])}
                 </span>
               </td>
               <td>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'])}</td>
               <td>{_.get(product, ['shippingInfo', 0, 'shippingServiceCost', 0, '__value__'])}</td>
               {zipData(product)}
               <td>
-                {cartIcon(product.itemId)}
+                {<CartIcon productId = {product.itemId}/>}
               </td>
             </tr>
           ))}
@@ -104,7 +87,6 @@ const ItemsTable = (props) => {
 };
 
 const mapStateToProps = state => ({
-    wishlistItems: wishlistItems(state),
 });
   
 const mapDispatchToProps = dispatch => ({

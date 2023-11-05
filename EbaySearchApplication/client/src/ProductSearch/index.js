@@ -24,6 +24,7 @@ function ProductSearch(props) {
     const [distance, setDistance] = useState(10);
     const [fromWhere, setFromWhere] = useState('current');
     const [zip, setZip] = useState('');
+    const [showKeywordError, setShowKeywordError] = useState(false);
 
 
     function resetForm () {
@@ -36,6 +37,7 @@ function ProductSearch(props) {
         setDistance(10);
         setFromWhere('current');
         setZip('');
+        setShowKeywordError(false);
     }
 
     function MyButtons() {
@@ -101,6 +103,8 @@ function ProductSearch(props) {
                         errorMessage={"Please enter a keyword."}
                         placeholderText={"Enter Product Name (e.g. iPhone 8)"}
                         disabled={false}
+                        showError={showKeywordError}
+                        changeShowError={() => {setShowKeywordError(true)}}
                     />
                 </Col>
             </Row>
@@ -115,7 +119,7 @@ function ProductSearch(props) {
         return (
             <Row className='mb-3'>
                 <Form.Label column sm={3}>Category</Form.Label>
-                <Col sm={2}>
+                <Col sm={3}>
                 <Form.Control as="select" value={category} onChange={categoryChange}>
                     <option value="0">All Categories</option>
                     <option value="550">Art</option>
@@ -219,6 +223,8 @@ function ProductSearch(props) {
                         placeholderText={""}
                         disabled={fromWhere==='current'}
                         suggestions={suggestions}
+                        showError={true}
+                        changeShowError={() => {return true}}
                     />
                 </Col>
             </Row>
