@@ -51,6 +51,15 @@ const ItemsTable = (props) => {
     return title;
   }
 
+  const getShippingValue = (product) => {
+    const shippingCost = _.get(product, ['shippingInfo', 0, 'shippingServiceCost', 0, '__value__'])
+    if (shippingCost === "0.0") {
+      return "Free Shipping"
+    } else {
+      return `$${shippingCost}`
+    }
+  }
+
   return (
     <>
       <Button disabled={detailItemId() === null} style={{"width": "7em", "float": "right", "margin-bottom": "10px"}} onClick={() => setDetailPageOpen(true)} className={`btn-spacing mr-5 btn-light btm-sm text-dark`}>
@@ -83,7 +92,7 @@ const ItemsTable = (props) => {
                 </span>
               </td>
               <td>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'])}</td>
-              <td>{_.get(product, ['shippingInfo', 0, 'shippingServiceCost', 0, '__value__'])}</td>
+              <td>{getShippingValue(product)}</td>
               {zipData(product)}
               <td>
                 {<CartIcon productId = {product.itemId}/>}

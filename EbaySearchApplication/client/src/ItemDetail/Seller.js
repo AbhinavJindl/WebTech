@@ -106,6 +106,22 @@ const Seller = (props) => {
     )
   }
 
+  const storeNameHeader = () => {
+    let name = _.get(item, ["Storefront", "StoreName"], null)
+
+    if (!name) {
+        return null
+    }
+
+    return (
+        <>
+            <Row className='p-4 justify-content-center align-items-center'>
+                <Col sm={12}>{_.upperCase(name)}</Col>
+            </Row>
+        </>
+    )
+  }
+
   const storeLink = () => {
     let link = _.get(item, ["Storefront", "StoreURL"], null)
 
@@ -125,6 +141,7 @@ const Seller = (props) => {
 
   return (
     <Container className="row-container">
+        {storeNameHeader()}
         {feedbackScore()}
         {popularity()}
         {feedbackRatingStar()}
