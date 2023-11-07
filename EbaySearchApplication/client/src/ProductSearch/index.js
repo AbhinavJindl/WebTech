@@ -8,13 +8,13 @@ import ItemsList from '../ItemsList';
 import Wishlist from '../ItemsList/Wishlist';
 import { currentLocation, setClear, suggestions } from '../features/resultsSlice';
 import './tabStyles.css'
-import { setDetailPageOpen } from '../features/itemDetailSlice';
+import { setDetailPageOpen, setDetails } from '../features/itemDetailSlice';
 import ItemDetails from '../ItemDetail/ItemDetails';
 import RequiredText from './RequiredText';
 
 
 function ProductSearch(props) {
-    const {currentLocation, setClear, setDetailPageOpen, suggestions} = props;
+    const {currentLocation, setClear, setDetailPageOpen, suggestions, setDetails} = props;
     const [keywords, setKeywords] = useState('');
     const [category, setCategory] = useState('0');
     const [conditionNew, setConditionNew] = useState(false);
@@ -54,6 +54,7 @@ function ProductSearch(props) {
             setClear(true);
             resetForm();
             setDetailPageOpen(false);
+            setDetails({});
         }
 
         return (
@@ -290,6 +291,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setClear: (clearState) => dispatch(setClear(clearState)),
     setDetailPageOpen: (open) => dispatch(setDetailPageOpen(open)),
+    setDetails: (details) => dispatch(setDetails(details)),
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(ProductSearch);

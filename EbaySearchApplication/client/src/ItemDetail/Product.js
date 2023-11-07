@@ -19,9 +19,9 @@ const Product = (props) => {
     const imagesUrls = _.get(item, 'PictureURL', [])
 
     return (
-        <Modal show={showImages} onHide={handleCloseImages} centered size="sm">
+        <Modal show={showImages} onHide={handleCloseImages} size="sm">
             <Modal.Header closeButton>
-                <Modal.Title>Product Images</Modal.Title>
+                <Modal.Title style={{"font-size": "14px"}}>Product Images</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <Carousel 
@@ -32,7 +32,7 @@ const Product = (props) => {
             >
                 {imagesUrls.map((img, index) => (
                     <Carousel.Item key={index}>
-                    <img src={img} alt="Product" className="img-fluid d-block" />
+                    <img src={img} alt="Product" className="img-fluid d-block" style={{height: "300px", "width": "100%"}} />
                     </Carousel.Item>
                 ))}
             </Carousel>
@@ -107,7 +107,7 @@ const Product = (props) => {
     <Container className="row-container">
         <Row className='p-2'>
             <Col className='table-key' sm={4}>Product Images</Col>
-            <Col sm={8}><span onClick={handleShowImages}>View Product Images Here</span></Col>
+            <Col sm={8}><span onClick={handleShowImages} style={{color: "teal"}}>View Product Images Here</span></Col>
         </Row>
 
         {imagesModal()}

@@ -32,7 +32,7 @@ const ItemsTable = (props) => {
         return null;
     }
     return (
-        <td>{product.postalCode}</td>
+        <td className={tableDataClass(product.itemId)}>{product.postalCode}</td>
     )
   }
 
@@ -60,11 +60,37 @@ const ItemsTable = (props) => {
     }
   }
 
+  const tableDataClass = (itemId) => {
+    return _.get(itemDetail, 'ItemID', null) === itemId && !isWishlistTab ? 'table-secondary': ''
+  }
+
+  const getTotalPrice = () => {
+    let totalPrice = 0.0;
+
+    if (!isWishlistTab) {
+      return null;
+    }
+
+    _.forEach(items, item => {
+      totalPrice += parseFloat(_.get(item, ['sellingStatus', 0, 'currentPrice', 0, '__value__'], 0.0))
+    })
+
+    return (
+      <tr>
+        <td></td><td></td><td></td><td></td>
+        <td><b>Total Shopping</b></td>
+        <td><b>{`$${totalPrice}`}</b></td>
+      </tr>
+    )
+
+  }
+
   return (
     <>
       <Button disabled={detailItemId() === null} style={{"width": "7em", "float": "right", "margin-bottom": "10px"}} onClick={() => setDetailPageOpen(true)} className={`btn-spacing mr-5 btn-light btm-sm text-dark`}>
           {"Detail >"}
       </Button>
+      <div style={{"width": "100%", "overflow-x": "auto"}}>
       <Table hover className="table-dark table-striped">
         <thead>
           <tr>
@@ -80,27 +106,29 @@ const ItemsTable = (props) => {
         <tbody>
           {items.map((product, index) => (
             <tr key={index}>
-              <td>{offset + index+1}</td>
-              <td>
+              <td className={tableDataClass(product.itemId)}>{offset + index+1}</td>
+              <td className={tableDataClass(product.itemId)}>
                 <a href={product.galleryURL[0]} target='_blank' rel="noreferrer">
                   <img src={product.galleryURL[0]} alt={product.title} width={100} height={100}/>
                 </a>
               </td>
-              <td>
-                <span title={product.title[0]} className='title-link' onClick={onSpecificProductClick(product.itemId)}>
+              <td className={tableDataClass(product.itemId)}>
+                <span title={product.title[0]} className='title-link d-inline-block text-truncate' onClick={onSpecificProductClick(product.itemId)}>
                     {shortenTitle(product.title[0])}
                 </span>
               </td>
-              <td>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'])}</td>
-              <td>{getShippingValue(product)}</td>
+              <td className={tableDataClass(product.itemId)}>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'])}</td>
+              <td className={`${tableDataClass(product.itemId)} text-truncate`}>{getShippingValue(product)}</td>
               {zipData(product)}
-              <td>
+              <td className={tableDataClass(product.itemId)}>
                 {<CartIcon productId = {product.itemId}/>}
               </td>
             </tr>
           ))}
+          {getTotalPrice()}
         </tbody>
       </Table>
+      </div>
     </>
   );
 };

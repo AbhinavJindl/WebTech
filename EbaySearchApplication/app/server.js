@@ -14,7 +14,7 @@ app.use('/items', itemsRoutes);
 app.use('/ebay', ebayRoutes);
 app.use('/google', googleRoutes);
 
-mongoose.connect('mongodb://localhost:27017/ebaySearch', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://jindalab:Abhinav1998@cluster0.u53blox.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.get('/', (req, res) => {
     res.send('Hello from server. Do something Useful with this!!!');

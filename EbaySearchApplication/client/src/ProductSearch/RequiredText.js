@@ -5,6 +5,7 @@ import './requiredTextStyles.css';
 function RequiredText(props) {
     const {validator, value, onValueChange, errorMessage, placeholderText, disabled, suggestions, showError, changeShowError} = props
     const [error, setError] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(true);
 
     useEffect(() => {
         if (disabled || !showError) {
@@ -40,14 +41,16 @@ function RequiredText(props) {
 
     const onChange = (e) => {
         onValChange(e.target.value);
+        setShowSuggestions(true);
     }
 
     const onSuggestClick = (item) => (e) => {
         onValChange(item);
+        setShowSuggestions(false);
     }
 
     const AutoSuggestComponent = () => {
-        if (error || !suggestions || suggestions.length === 0) {
+        if (error || !suggestions || suggestions.length === 0 || !showSuggestions) {
             return null
         }
         return (

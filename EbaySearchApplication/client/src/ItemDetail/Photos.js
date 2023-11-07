@@ -10,6 +10,9 @@ const Photos = (props) => {
   photosLinks = _.map(photosLinks, (itm, idx) => _.get(itm, 'link', ''));
 
   const getImage = (idx) => {
+    if (photosLinks.length <= idx) {
+        return null
+    }
     return (
         <a href={photosLinks[idx]} target='_blank' rel="noreferrer">
             <img src={photosLinks[idx]} className="img-fluid mb-2" alt="similar pic"/>

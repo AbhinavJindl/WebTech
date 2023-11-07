@@ -11,6 +11,7 @@ import Shipping from './Shipping';
 import Seller from './Seller';
 import SimilarProducts from './SimilarProducts';
 import CartIcon from '../ItemsList/cartIcon';
+import './rowsStyles.css';
 const _ = require('lodash')
 
 const ItemDetails = (props) => {
@@ -64,7 +65,7 @@ const ItemDetails = (props) => {
     <div className={styles.tableContainer}>
         <div className={styles.detailHeader}>
             <Container>
-                <Row><h5>{item.Title}</h5></Row>
+                <Row style={{"text-align": "center"}}><h5>{item.Title}</h5></Row>
                 <div className={styles.headerRow}>
                     <Button style={{"width": "5em"}} onClick={() => setDetailPageOpen(false)} className={`btn-spacing mr-5 btn-light btm-sm text-dark`}>
                         {"< List"}
@@ -78,22 +79,22 @@ const ItemDetails = (props) => {
         </div>
       <div className={styles.tabsSection}>
             <Tab.Container defaultActiveKey="Product">
-                <Nav variant="pills">
-                  <Nav.Item>
-                      <Nav.Link eventKey="Product">Product</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                      <Nav.Link eventKey="Photos">Photos</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                      <Nav.Link eventKey="Shipping">Shipping</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                      <Nav.Link eventKey="Seller">Seller</Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                      <Nav.Link eventKey="SimilarProducts">Similar Products</Nav.Link>
-                  </Nav.Item>
+                <Nav variant="tabs" style={{"justify-content": "flex-end"}}>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Product">Product</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Photos">Photos</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Shipping">Shipping</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="Seller">Seller</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="SimilarProducts">Similar Products</Nav.Link>
+                    </Nav.Item>
                 </Nav>
                 <Tab.Content>
                     <Tab.Pane eventKey="Product">

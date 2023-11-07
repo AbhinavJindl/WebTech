@@ -21,7 +21,7 @@ const Seller = (props) => {
 
   const feedbackScore = () => {
     let score = _.get(item, ["Seller", "FeedbackScore"], null)
-    if (!score) {
+    if (score === null) {
         return null
     }
 
@@ -35,7 +35,7 @@ const Seller = (props) => {
 
   const popularity = () => {
     let pop = _.get(item, ["Seller", "PositiveFeedbackPercent"], null)
-    if (!pop) {
+    if (pop === null) {
         return null
     }
     return (
@@ -50,15 +50,32 @@ const Seller = (props) => {
 
   const feedbackRatingStar = () => {
     let rate = _.get(item, ["Seller", "FeedbackRatingStar"], null)
-    if (!rate) {
+    if (rate === null) {
         return null
     }
+
+    let score = _.get(item, ["Seller", "FeedbackScore"], null)
+    if (score === null) {
+        return null
+    }
+
+    const spaceIndex = _.upperCase(rate).indexOf(' ');
+    let color;
+    if (spaceIndex !== -1) {
+        color = rate.substr(0, spaceIndex);
+    } else {
+        color = rate;
+    }
+    
+    const iconName = parseInt(score) >= 10000 ? 'stars' : 'star_border';
 
     return (
         <>
             <Row className='p-2'>
                 <Col className='table-key' sm={4}>Feedback Rating Star</Col>
-                <Col sm={8}>{rate}</Col>
+                <Col sm={8}>
+                <span className="material-icons" style={{ color, borderRadius: '50%', padding: '3px'}}>{iconName}</span>
+                </Col>
             </Row>
         </>
     )
@@ -92,7 +109,7 @@ const Seller = (props) => {
   const storeName = () => {
     let name = _.get(item, ["Storefront", "StoreName"], null)
 
-    if (!name) {
+    if (name === null) {
         return null
     }
 
@@ -109,14 +126,14 @@ const Seller = (props) => {
   const storeNameHeader = () => {
     let name = _.get(item, ["Storefront", "StoreName"], null)
 
-    if (!name) {
+    if (name === null) {
         return null
     }
 
     return (
         <>
-            <Row className='p-4 justify-content-center align-items-center'>
-                <Col sm={12}>{_.upperCase(name)}</Col>
+            <Row className='p-4 justify-content-center align-items-center' style={{"text-align": "center"}}>
+                <Col sm={12}>{name.toUpperCase()}</Col>
             </Row>
         </>
     )
@@ -125,7 +142,7 @@ const Seller = (props) => {
   const storeLink = () => {
     let link = _.get(item, ["Storefront", "StoreURL"], null)
 
-    if (!link) {
+    if (link === null) {
         return null
     }
 
@@ -133,7 +150,7 @@ const Seller = (props) => {
         <>
             <Row className='p-2'>
                 <Col className='table-key' sm={4}>Buy Product At</Col>
-                <Col sm={8}><a href={link} target='_blank' rel="noreferrer">Store</a></Col>
+                <Col sm={8}><a href={link} style={{color: "teal"}} target='_blank' rel="noreferrer">Store</a></Col>
             </Row>
         </>
     )

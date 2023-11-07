@@ -24,7 +24,7 @@ export const zipValidator = (val) => {
 
 export const fetchSuggestions = async (initialString) => {
     try {
-        if (!(zipValidator(initialString)) || initialString.length === 5) {
+        if (!(zipValidator(initialString)) || initialString.length > 5) {
             store.dispatch(setSuggestions([]));
             return
         }

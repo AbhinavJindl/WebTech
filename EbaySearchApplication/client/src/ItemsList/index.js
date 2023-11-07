@@ -7,6 +7,7 @@ import ItemsTable from './itemsTable';
 import { isDetailPageOpen } from '../features/itemDetailSlice';
 import ProgressBarComponent from '../ProgressBar';
 import NoRecordsAlert from '../NoRecordsAlert';
+import './normalStyles.css'
 
 const ProductList = (props) => {
   const {isLoading, isClear, items, onDecrementPage, onIncrementPage, onSetPage, pageNumber, isDetailPageOpen} = props;
@@ -29,9 +30,9 @@ const ProductList = (props) => {
     return (
       <div className={styles.paginationContainer}>
         <Pagination>
-            <Pagination.Prev disabled={pageNumber===1} onClick={onDecrementPage}>{'< Previous'}</Pagination.Prev>
+            <Pagination.Prev disabled={pageNumber===1} onClick={onDecrementPage}>{'<< Previous'}</Pagination.Prev>
             {pagesArray}
-            <Pagination.Next disabled={pageNumber===totalPages()} onClick={onIncrementPage}>{'Next >'}</Pagination.Next>
+            <Pagination.Next disabled={pageNumber===totalPages()} onClick={onIncrementPage}>{'Next >>'}</Pagination.Next>
         </Pagination>
       </div>
     )

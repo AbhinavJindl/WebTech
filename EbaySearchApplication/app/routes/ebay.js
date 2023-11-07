@@ -23,7 +23,7 @@ router.get('/find_items_advanced', async (req, res) => {
         ebayReqQuery = add_param(ebayReqQuery, 'buyerPostalCode', queryParams.buyerPostalCode);
         const categoryId = _.get(queryParams, 'categoryId', null);
         if (categoryId !== null) {
-            ebayReqQuery = add_param(ebayReqQuery, 'categoryId', categoryId);
+            ebayReqQuery = add_param(ebayReqQuery, 'category', categoryId);
         }
         let i = 0
 

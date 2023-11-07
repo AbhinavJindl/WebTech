@@ -27,7 +27,7 @@ const CartIcon = (props) => {
             cartStyle['color'] = 'orange';
             return (
                 <i 
-                    className="material-icons-outlined" 
+                    className="material-icons" 
                     onClick={onCartClick} 
                     style={cartStyle}
                 >
@@ -38,7 +38,7 @@ const CartIcon = (props) => {
     
         return (
             <i 
-            className="material-icons-outlined" 
+            className="material-icons" 
             onClick={onCartClick}
             style={cartStyle}
             >
