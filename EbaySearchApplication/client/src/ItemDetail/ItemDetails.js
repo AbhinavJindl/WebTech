@@ -36,7 +36,7 @@ const ItemDetails = (props) => {
       }(document, 'script', 'facebook-jssdk'));
   }, []);
 
-  if (isClear || !isDetailPageOpen) {
+  if (!isDetailPageOpen) {
     return null
   }
 

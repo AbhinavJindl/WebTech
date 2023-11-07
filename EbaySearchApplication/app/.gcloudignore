@@ -21,3 +21,4 @@ __pycache__/
 .ebay_search_application_env/
 *.pyc
 node_modules/
+*node_modules/

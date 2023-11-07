@@ -5,7 +5,7 @@ import { setIsLoading, setClear,setCurrentLocation, setItems, setWishlistItems, 
 import { setDetailPageOpen, setDetails, setSimilarPhotos, setSimilarProducts } from './features/itemDetailSlice';
 const _ = require('lodash');
 
-const HOST = 'http://localhost:5000/'
+const HOST = '/'
 
 const API_ENDPOINTS = {
     'IP_INFO': 'https://ipinfo.io/json?token=012967d69bb58a',
