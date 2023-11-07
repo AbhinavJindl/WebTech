@@ -5,6 +5,7 @@ const axios = require('axios');
 const itemsRoutes = require('./routes/items');
 const ebayRoutes = require('./routes/ebay');
 const googleRoutes = require('./routes/google');
+const path = require('path')
 
 const app = express();
 
@@ -13,6 +14,12 @@ app.use(express.json());
 app.use('/items', itemsRoutes);
 app.use('/ebay', ebayRoutes);
 app.use('/google', googleRoutes);
+
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 mongoose.connect('mongodb+srv://jindalab:Abhinav1998@cluster0.u53blox.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
