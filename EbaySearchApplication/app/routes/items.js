@@ -4,10 +4,12 @@ const router = express.Router();
 const Item = require('../models/Item');
 const _  = require('lodash');
 
+// "Add CRUD operations in mongoose" (next 20 lines). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat.
 router.post('/', async (req, res) => {
     try {
         const { itemId } = req.body;
         let item = await Item.findOne({ itemId: itemId }).exec();
+        // "How to insert a new Item after checking if it exists" (next 5 lines). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat.
         if (!item) {
             item = new Item({itemId: itemId, data: req.body});
             await item.save();

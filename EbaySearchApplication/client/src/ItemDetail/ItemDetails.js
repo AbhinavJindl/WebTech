@@ -15,8 +15,9 @@ import './rowsStyles.css';
 const _ = require('lodash')
 
 const ItemDetails = (props) => {
-  const {similarProducts, isClear, items, item, isDetailPageOpen, setDetailPageOpen, isLoading, similarPhotos, wishlistItems} = props;
+  const {similarProducts, items, item, isDetailPageOpen, setDetailPageOpen, isLoading, similarPhotos, wishlistItems} = props;
 
+  // (next 20 lines) https://jasonwatmore.com/post/2020/10/28/react-facebook-how-to-use-the-facebook-sdk-in-a-react-app 
   useEffect(() => {
     window.fbAsyncInit = function() {
         window.FB.init({

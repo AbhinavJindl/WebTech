@@ -32,7 +32,7 @@ const ItemsTable = (props) => {
         return null;
     }
     return (
-        <td className={tableDataClass(product.itemId)}>{product.postalCode}</td>
+        <td className={tableDataClass(product.itemId)}>{_.get(product, 'postalCode', 'N/A')}</td>
     )
   }
 
@@ -52,7 +52,7 @@ const ItemsTable = (props) => {
   }
 
   const getShippingValue = (product) => {
-    const shippingCost = _.get(product, ['shippingInfo', 0, 'shippingServiceCost', 0, '__value__'])
+    const shippingCost = _.get(product, ['shippingInfo', 0, 'shippingServiceCost', 0, '__value__'], 'N/A')
     if (shippingCost === "0.0") {
       return "Free Shipping"
     } else {
@@ -114,10 +114,10 @@ const ItemsTable = (props) => {
               </td>
               <td className={tableDataClass(product.itemId)}>
                 <span title={product.title[0]} className='title-link d-inline-block text-truncate' onClick={onSpecificProductClick(product.itemId)}>
-                    {shortenTitle(product.title[0])}
+                    {shortenTitle(_.get(product, ['title', 0], 'N/A'))}
                 </span>
               </td>
-              <td className={tableDataClass(product.itemId)}>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'])}</td>
+              <td className={tableDataClass(product.itemId)}>${_.get(product, ['sellingStatus', 0, 'currentPrice', 0, '__value__'], 'N/A')}</td>
               <td className={`${tableDataClass(product.itemId)} text-truncate`}>{getShippingValue(product)}</td>
               {zipData(product)}
               <td className={tableDataClass(product.itemId)}>

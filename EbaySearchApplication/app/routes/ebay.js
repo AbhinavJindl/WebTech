@@ -17,13 +17,14 @@ function add_param(url, key, value) {
 
 router.get('/find_items_advanced', async (req, res) => {
     try {
+        // "read query params from req in nodejs server" (next 10 lines). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat. 
         const queryParams = req.query;
         let ebayReqQuery = ITEMS_URL;
         ebayReqQuery = add_param(ebayReqQuery, 'keywords', queryParams.keywords);
         ebayReqQuery = add_param(ebayReqQuery, 'buyerPostalCode', queryParams.buyerPostalCode);
         const categoryId = _.get(queryParams, 'categoryId', null);
         if (categoryId !== null) {
-            ebayReqQuery = add_param(ebayReqQuery, 'category', categoryId);
+            ebayReqQuery = add_param(ebayReqQuery, 'categoryId', categoryId);
         }
         let i = 0
 
@@ -91,6 +92,7 @@ router.get('/get_single_item', async (req, res) => {
     try {
         const accessToken = await oauthToken.getApplicationToken()
         const single_item_url = `${SINGLE_ITEM_URL}&ItemID=${req.query.itemId}`
+        // "pass header in axios get request" (next 5 lines). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat.
         const response = await axios.get(
             single_item_url, 
             {

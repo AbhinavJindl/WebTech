@@ -15,6 +15,7 @@ app.use('/items', itemsRoutes);
 app.use('/ebay', ebayRoutes);
 app.use('/google', googleRoutes);
 
+// "render a react build in node js server as a endpoint" (next 4 lines). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat.
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

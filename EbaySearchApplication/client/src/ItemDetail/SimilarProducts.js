@@ -44,6 +44,9 @@ const SimilarProducts = (props) => {
     }
 
     const getShowMoreButton =  () => {
+        if (similarProducts.length < 5) {
+            return null
+        }
         let text = "Show More";
         let f = () => {setShowMore(true)}
         if (showMore) {
@@ -52,7 +55,7 @@ const SimilarProducts = (props) => {
         }
         return (
             <Row className="justify-content-center">
-            <Button variant="dark" className="text-white" style={{ width: '130px' }} onClick={f}>{text}</Button>
+                <Button variant="dark" className="text-white" style={{ width: '130px' }} onClick={f}>{text}</Button>
             </Row>
         )
 
@@ -105,6 +108,8 @@ const SimilarProducts = (props) => {
         "ascending": "Ascending",
         "descending": "Descending",
     }
+
+    // "disable dropdown in react bootstrap" (1 line). ChatGPT, 25 Sep. version, OpenAI, 20 Oct. 2023, chat.openai.com/chat.
 
     return (
         <Container>

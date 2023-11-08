@@ -32,7 +32,9 @@ const Product = (props) => {
             >
                 {imagesUrls.map((img, index) => (
                     <Carousel.Item key={index}>
-                    <img src={img} alt="Product" className="img-fluid d-block" style={{height: "300px", "width": "100%"}} />
+                        <a href={img} target='_blank' rel='noreferrer'>
+                        <img src={img} alt="Product" className="img-fluid d-block" style={{height: "300px", "width": "100%"}} />
+                        </a>
                     </Carousel.Item>
                 ))}
             </Carousel>
@@ -51,9 +53,9 @@ const Product = (props) => {
   }
 
   const getPrice = () => {
-    const price = _.get(item, ['CurrentPrice', 'Value'])
+    const price = _.get(item, ['CurrentPrice', 'Value'], null)
 
-    if (!price) {
+    if (price === null) {
         return null
     }
 
@@ -66,9 +68,9 @@ const Product = (props) => {
   }
 
   const getLocation = () => {
-    const loc = _.get(item, 'Location')
+    const loc = _.get(item, 'Location', null)
 
-    if (!loc) {
+    if (loc === null) {
         return null
     }
 
