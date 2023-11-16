@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">EbaySearch</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="category_items">
+        <item>All Categories</item>
+        <item>Art</item>
+        <item>Baby</item>
+        <item>Books</item>
+        <item>Clothing, Shoes &amp; Accesories</item>
+        <item>Computers/Tablets &amp; Networking</item>
+        <item>Health &amp; Beauty</item>
+        <item>Music</item>
+        <item>Video Games &amp; Console</item>
+    </string-array>
+</resources>
