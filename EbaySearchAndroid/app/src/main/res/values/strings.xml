@@ -2,6 +2,7 @@
     <string name="app_name">EbaySearch</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_results">Search Results</string>
     <string-array name="category_items">
         <item>All Categories</item>
         <item>Art</item>
@@ -13,4 +14,8 @@
         <item>Music</item>
         <item>Video Games &amp; Console</item>
     </string-array>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal" type="color">@android:color/white</item>
+    </style>
 </resources>
