@@ -2,6 +2,8 @@ package com.example.ebaysearch
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -15,6 +17,15 @@ class TabActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tab)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbarTitle = findViewById<TextView>(R.id.toolbar_title)
+        // Set the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar)
+        // Get rid of the default title text that comes with the Toolbar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        // Set custom title for the Toolbar
+        toolbarTitle.text = "Product Search"
 
         viewPager = findViewById(R.id.viewPager)
         tabLayout = findViewById(R.id.tabLayout)
