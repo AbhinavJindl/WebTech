@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.bumptech.glide.Glide
+import org.json.JSONObject
 
 private const val ARG_PARAM1 = "itemId"
 private const val ARG_PARAM2 = "itemInfo"
@@ -39,7 +40,7 @@ class PhotosFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerViewImages)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-        loadSimilarPhotos("Apple iPhone 12 MINI 64GB 128GB 256GB (UNLOCKED) 100% BATTERY")
+        loadSimilarPhotos(JSONObject(itemInfo).getJSONArray("title").getString(0))
         return view
     }
 
@@ -48,7 +49,7 @@ class PhotosFragment : Fragment() {
         val host = application.HOST
         var url = host + "google/similar_photos?"
 
-        url = application.addParameters(url, "queryText", text)
+        url = application.addParameters(url, "queryText", text.replace(Regex("[^a-zA-Z0-9\\s]"), ""))
         val imageUrlsFromApi = ArrayList<String>()
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,

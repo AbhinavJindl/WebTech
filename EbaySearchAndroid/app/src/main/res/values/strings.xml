@@ -15,6 +15,18 @@
         <item>Video Games &amp; Console</item>
     </string-array>
 
+    <string-array name="similar_results_keys_array">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Price</item>
+        <item>Days</item>
+    </string-array>
+
+    <string-array name="similar_results_order_array">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal" type="color">@android:color/white</item>
     </style>
@@ -26,5 +38,12 @@
     <style name="ShippingTextValue" parent="ThemeOverlay.AppCompat">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:padding">0dp</item>
+
     </style>
 </resources>

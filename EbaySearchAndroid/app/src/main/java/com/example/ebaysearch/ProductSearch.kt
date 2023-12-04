@@ -20,12 +20,14 @@ import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 
 class ProductSearch : Fragment() {
 
     lateinit var searchButton: Button
+    lateinit var clearButton: Button
     lateinit var keywordEditText: EditText
     lateinit var keywordErrorText: TextView
     lateinit var categorySpinner: Spinner
@@ -38,6 +40,7 @@ class ProductSearch : Fragment() {
     lateinit var hiddenField: LinearLayout
     lateinit var milesFromText: TextView
     lateinit var zipcodeEnableRadioButton: RadioButton
+    lateinit var currentLocationEnableRadioButton: RadioButton
     lateinit var zipcodeEditText: AutoCompleteTextView
     lateinit var zipCodeErrorText: TextView
     lateinit var HOST: String
@@ -131,9 +134,11 @@ class ProductSearch : Fragment() {
         hiddenField = view.findViewById(R.id.extraLocationSearch)
         milesFromText = view.findViewById(R.id.milesFromText)
         zipcodeEnableRadioButton = view.findViewById(R.id.zipcodeRadioButton)
+        currentLocationEnableRadioButton = view.findViewById(R.id.currentLocationRadioButton)
         zipcodeEditText = view.findViewById(R.id.zipcodeText)
         zipCodeErrorText = view.findViewById(R.id.zipcodeErrorText)
         searchButton = view.findViewById(R.id.searchButton)
+        clearButton = view.findViewById(R.id.clearButton)
         keywordEditText = view.findViewById(R.id.keywordEditText)
         keywordErrorText = view.findViewById(R.id.keywordErrorText)
         categorySpinner = view.findViewById(R.id.categorySpinner)
@@ -163,6 +168,20 @@ class ProductSearch : Fragment() {
                 // Perform the search operation
                 performSearch()
             }
+        }
+
+        clearButton.setOnClickListener {
+            keywordEditText.setText("")
+            categorySpinner.setSelection(0)
+            newCheckBox.isChecked = false
+            usedCheckBox.isChecked = false
+            localPickupCheckBox.isChecked = false
+            freeShippingCheckBox.isChecked = false
+            enableNearbySearchCheckbox.isChecked = false
+            zipcodeEditText.setText("")
+            zipcodeEnableRadioButton.isChecked = false
+            currentLocationEnableRadioButton.isChecked = true
+            milesFromText.setText("")
         }
 
     }

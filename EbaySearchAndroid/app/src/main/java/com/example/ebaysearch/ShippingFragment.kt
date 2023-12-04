@@ -76,11 +76,29 @@ class ShippingFragment : Fragment() {
         }
         feedbackStar.setImageResource(iconSrc)
         val regex = Regex("^([A-Z][a-z]*)[A-Z]?[a-z]*")
-        feedbackStar.setColorFilter(Color.parseColor(regex.find(feedbackRatingStar)?.groups?.get(0)?.value ?: ""))
+        feedbackStar.setColorFilter(Color.parseColor(getStarColor(regex.find(feedbackRatingStar)?.groups?.get(0)?.value ?: "")))
 
         sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0)
         circularProgress.progress = sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0).toFloat()
         circularProgressText.text = sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0) + "%"
+    }
+
+    fun getStarColor(color: String): String {
+        return when (color) {
+            "Yellow" -> "#FFFF00" // Hex code for yellow
+            "Blue" -> "#0000FF" // Hex code for blue
+            "Turquoise" -> "#40E0D0" // Hex code for turquoise
+            "Purple" -> "#800080" // Hex code for purple
+            "Red" -> "#FF0000" // Hex code for red
+            "Green" -> "#008000" // Hex code for green
+            "YellowShooting" -> "#FFFF00" // Hex code for yellow
+            "TurquoiseShooting" -> "#40E0D0" // Hex code for turquoise
+            "PurpleShooting" -> "#800080" // Hex code for purple
+            "RedShooting" -> "#FF0000" // Hex code for red
+            "GreenShooting" -> "#008000" // Hex code for green
+            "SilverShooting" -> "#C0C0C0" // Hex code for silver
+            else -> "#FFFFFF" // Hex code for white
+        }
     }
 
     companion object {

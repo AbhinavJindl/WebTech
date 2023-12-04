@@ -5,4 +5,5 @@
     <color name="gray">#808080</color>
     <color name="error_message">#FF0000</color>
     <color name="purple">#7f00ff</color>
+    <color name="orange">#FFAF00</color>
 </resources>
