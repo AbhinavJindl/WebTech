@@ -1,41 +1,32 @@
 package com.example.ebaysearch
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.ScrollView
+import android.widget.ImageView
 import android.widget.TextView
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import org.json.JSONArray
+import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import org.json.JSONObject
 
 
 private const val ARG_PARAM1 = "itemId"
 private const val ARG_PARAM2 = "itemInfo"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ShippingFragment : Fragment() {
     private lateinit var itemId: String
     private lateinit  var itemInfo: String
 
-    private lateinit var progressBarView: RelativeLayout
-    private lateinit var productDetailsContainerView: ScrollView
-    private lateinit var productTitle: TextView
-    private lateinit var productPrice: TextView
-    private lateinit var productHighlight1: TextView
-    private lateinit var productHighlight2: TextView
-    private lateinit var productSpecifications: LinearLayout
-
+    private lateinit var storeNameValue: TextView
+    private lateinit var feedbackScore: TextView
+    private lateinit var feedbackStar: ImageView
+    private lateinit var circularProgress: CircularProgressBar
+    private lateinit var circularProgressText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,75 +41,52 @@ class ShippingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product, container, false)
+        return inflater.inflate(R.layout.fragment_shipping, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressBarView = view.findViewById(R.id.progress_bar)
-        productDetailsContainerView = view.findViewById(R.id.product_details_container)
-        productTitle = view.findViewById(R.id.product_title)
-        productPrice = view.findViewById(R.id.product_price)
-        productHighlight1 = view.findViewById(R.id.product_highlight1)
-        productHighlight2 = view.findViewById(R.id.product_highlight2)
-        productDetailsContainerView = view.findViewById(R.id.product_details_container)
-        productSpecifications = view.findViewById(R.id.product_specifications)
-        loadApiData(itemId, itemInfo)
-    }
+        storeNameValue = view.findViewById(R.id.store_name_value)
+        feedbackScore = view.findViewById(R.id.feedback_score_value)
+        feedbackStar = view.findViewById(R.id.feedback_star)
+        circularProgress = view.findViewById(R.id.circular_progress)
+        circularProgressText = view.findViewById(R.id.circular_progress_text)
 
-    private fun loadApiData(itemId: String, itemInfo: String) {
-        val application = (requireActivity().application as EbaySearchApplication)
-        val host = application.HOST
-        var url = host + "ebay/get_single_item?"
-        url = application.addParameters(url, "itemId", itemId)
-        val jsonObjectRequest = JsonObjectRequest(
-            Request.Method.GET, url, null,
-            { response ->
-                progressBarView.visibility = View.GONE
-                productDetailsContainerView.visibility = View.VISIBLE
-                val item = response.getJSONObject("Item")
 
-                productTitle.text = item.getString("Title")
+        val item = JSONObject(itemInfo)
+        val storeInfo = item.getJSONArray("storeInfo").getJSONObject(0)
+        val url = storeInfo.getJSONArray("storeURL").getString(0)
+        val text = storeInfo.getJSONArray("storeName").getString(0)
+        storeNameValue.text = text
 
-                var shippingCost = "Free"
-                var shippingCostString = JSONObject(itemInfo).getJSONArray("shippingInfo").getJSONObject(0).getJSONArray("shippingServiceCost").getJSONObject(0).getString("__value__")
-                if (shippingCostString != "0.0") {
-                    shippingCost = "$" + shippingCostString
-                }
-                productPrice.text = "\$" + item.getJSONObject("CurrentPrice").getString("Value")  + " with " + shippingCost + " shipping"
-                productHighlight1.text = "Price" + "\t\t\t" + "\$" + item.getJSONObject("CurrentPrice").getString("Value")
-                val nameValueLists:JSONArray = item.getJSONObject("ItemSpecifics").getJSONArray("NameValueList")
-                for (i in 0 until nameValueLists.length()) {
-                    if (nameValueLists.getJSONObject(i).getString("Name") ==  "Brand") {
-                        productHighlight2.visibility = View.VISIBLE
-                        productHighlight2.text = "Brand" + "\t\t\t" + nameValueLists.getJSONObject(i).getJSONArray("Value").getString(0)
-                    }
-                }
+        storeNameValue.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
 
-                for (i in 0 until nameValueLists.length()) {
-                    if (nameValueLists.getJSONObject(i).getString("Name") ==  "Brand") {
-                        continue
-                    }
-                    val newTextView = TextView(context).apply {
-                        text = "- " + nameValueLists.getJSONObject(i).getJSONArray("Value").getString(0)
-                        textAlignment = View.TEXT_ALIGNMENT_TEXT_START}
+        val sellerInfo = item.getJSONArray("sellerInfo").getJSONObject(0)
 
-                    productSpecifications.addView(newTextView)
+        feedbackScore.text = sellerInfo.getJSONArray("feedbackScore").getString(0)
+        val feedbackScr = sellerInfo.getJSONArray("feedbackScore").getString(0).toFloat()
+        val feedbackRatingStar = sellerInfo.getJSONArray("feedbackRatingStar").getString(0)
+        var iconSrc = R.drawable.star_circle_outline;
+        if (feedbackScr >= 10000) {
+            iconSrc = R.drawable.star_circle
+        }
+        feedbackStar.setImageResource(iconSrc)
+        val regex = Regex("^([A-Z][a-z]*)[A-Z]?[a-z]*")
+        feedbackStar.setColorFilter(Color.parseColor(regex.find(feedbackRatingStar)?.groups?.get(0)?.value ?: ""))
 
-                }
-            },
-            { error ->
-                Log.e("fetch detail api error", error.toString())
-            })
-
-        val requestQueue = (application as EbaySearchApplication).requestQueue
-        requestQueue.add(jsonObjectRequest)
+        sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0)
+        circularProgress.progress = sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0).toFloat()
+        circularProgressText.text = sellerInfo.getJSONArray("positiveFeedbackPercent").getString(0) + "%"
     }
 
     companion object {
         @JvmStatic
         fun newInstance(itemId: String, itemInfo: String) =
-            ProductFragment().apply {
+            ShippingFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, itemId)
                     putString(ARG_PARAM2, itemInfo)

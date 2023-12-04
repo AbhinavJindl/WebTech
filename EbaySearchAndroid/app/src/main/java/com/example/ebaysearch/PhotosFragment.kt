@@ -72,7 +72,7 @@ class PhotosFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(itemId: String, itemInfo: String) =
-            ProductFragment().apply {
+            PhotosFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, itemId)
                     putString(ARG_PARAM2, itemInfo)

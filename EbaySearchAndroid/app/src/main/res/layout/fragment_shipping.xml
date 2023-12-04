@@ -3,12 +3,303 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ShippingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/product_shipping_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TableLayout
+            android:id="@+id/sold_by_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+            <LinearLayout
+                android:id="@+id/sold_by_header"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/truck"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textStyle="bold"
+                    android:text="Sold By"
+                    android:textSize="25dp"/>
+            </LinearLayout>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Store Name"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:background="#EACAFF"
+                    android:id="@+id/store_name_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This ia a store link"
+                    android:singleLine="true"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:layout_column="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue" />
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Feedback Score"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/feedback_score_value"
+                    android:text="2222"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Popularity"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <FrameLayout
+                    android:id="@+id/circular_progress_frame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start">
+
+                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                        android:id="@+id/circular_progress"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        app:cpb_progressbar_color="@android:color/holo_red_dark"
+                        app:cpb_background_progressbar_color="@android:color/darker_gray"
+                        app:cpb_progressbar_width="3dp"
+                        app:cpb_background_progressbar_width="2dp"
+                        app:cpb_progress="50"
+                        app:cpb_progress_max="100"/>
+
+                    <TextView
+                        android:id="@+id/circular_progress_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="50%"
+                        android:textSize="10dp"/>
+
+                </FrameLayout>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Feedback Star"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+
+                <ImageView
+                    android:id="@+id/feedback_star"
+                    android:layout_column="1"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/star_circle_outline"
+                    android:layout_gravity="start"
+                    android:minHeight="20sp"
+
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+        </TableLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginBottom="8dp"/>
+
+
+        <TableLayout
+            android:id="@+id/shipping_info_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+            <LinearLayout
+                android:id="@+id/shipping_info_header"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ferry"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textStyle="bold"
+                    android:text="Shipping Info"
+                    android:textSize="25dp"/>
+            </LinearLayout>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Shipping Cost"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/shipping_cost_value"
+                    android:text="Free"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Global Shipping"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/global_shipping_value"
+                    android:text="No"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Handling TIme"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/handling_time_value"
+                    android:text="1"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+        </TableLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginBottom="8dp"/>
+
+
+        <TableLayout
+            android:id="@+id/return_policy_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+            <LinearLayout
+                android:id="@+id/return_policy_header"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dump_truck"/>
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textStyle="bold"
+                    android:text="Return Policy"
+                    android:textSize="25dp"/>
+            </LinearLayout>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Policy"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/policy_value"
+                    android:text="Returns Accepted"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Returns Within"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/returns_within_value"
+                    android:text="30 Days"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Refund Mode"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/refund_mode_value"
+                    android:text="Monay Back"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+
+            <TableRow
+                android:paddingLeft="8dp">
+                <TextView
+                    android:text="Shipped By"
+                    android:paddingEnd="16dp"
+                    android:layout_column="0"
+                    android:textColor="@color/black"
+                    style="@style/ShippingTextKey"/>
+                <TextView
+                    android:id="@+id/shipped_by_value"
+                    android:text="Seller"
+                    android:layout_column="1"
+                    android:textColor="@color/gray"
+                    style="@style/ShippingTextValue"/>
+            </TableRow>
+        </TableLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -49,6 +49,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:id="@+id/product_images"/>
+
             <TextView
                 android:id="@+id/product_title"
                 android:layout_width="wrap_content"
@@ -68,7 +74,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"/>
 
@@ -95,7 +101,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/gray"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"/>
 

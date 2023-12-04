@@ -1,17 +1,24 @@
 package com.example.ebaysearch
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -35,6 +42,7 @@ class ProductFragment : Fragment() {
     private lateinit var productHighlight1: TextView
     private lateinit var productHighlight2: TextView
     private lateinit var productSpecifications: LinearLayout
+    private lateinit var productImages: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +63,7 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        productImages = view.findViewById(R.id.product_images)
         progressBarView = view.findViewById(R.id.progress_bar)
         productDetailsContainerView = view.findViewById(R.id.product_details_container)
         productTitle = view.findViewById(R.id.product_title)
@@ -77,6 +86,15 @@ class ProductFragment : Fragment() {
                 progressBarView.visibility = View.GONE
                 productDetailsContainerView.visibility = View.VISIBLE
                 val item = response.getJSONObject("Item")
+                val productPictures = item.getJSONArray("PictureURL")
+                productImages.adapter = ProductImagesAdapter(requireContext(), productPictures)
+                productImages?.setLayoutManager(
+                    LinearLayoutManager(
+                        requireContext(), LinearLayoutManager.HORIZONTAL, false
+                    )
+                )
+                val snap = PagerSnapHelper()
+                snap.attachToRecyclerView(productImages)
 
                 productTitle.text = item.getString("Title")
 
@@ -100,7 +118,7 @@ class ProductFragment : Fragment() {
                         continue
                     }
                     val newTextView = TextView(context).apply {
-                        text = "- " + nameValueLists.getJSONObject(i).getJSONArray("Value").getString(0)
+                        text = "\u2022 " + nameValueLists.getJSONObject(i).getJSONArray("Value").getString(0)
                         textAlignment = View.TEXT_ALIGNMENT_TEXT_START}
 
                     productSpecifications.addView(newTextView)
@@ -125,4 +143,24 @@ class ProductFragment : Fragment() {
                 }
             }
     }
+}
+
+class ProductImagesAdapter(private val context: Context, private val imageUrls: JSONArray) : RecyclerView.Adapter<ProductImagesAdapter.ViewHolder>() {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imageView: ImageView = view.findViewById(R.id.productImageView)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.product_photos_tab_layout, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.e("dada", position.toString())
+        Glide.with(holder.itemView)
+            .load(imageUrls.get(position))
+            .into(holder.imageView)
+    }
+
+    override fun getItemCount(): Int = imageUrls.length()
 }
