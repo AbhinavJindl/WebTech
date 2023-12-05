@@ -1,7 +1,10 @@
 package com.example.ebaysearch
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -10,11 +13,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import org.json.JSONObject
 
 class ItemDetailActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var tabs: TabLayout
     private lateinit var adapter: ViewPagerAdapter
+    private lateinit var fbBtn: ImageButton
     lateinit var HOST: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +53,27 @@ class ItemDetailActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        fbBtn = findViewById(R.id.fbBtn)
         viewPager = findViewById(R.id.viewPager)
         tabs = findViewById(R.id.detailTabsLayout)
         adapter = ViewPagerAdapter(this, itemId, itemInfo)
         viewPager.adapter = adapter
+        val price = JSONObject(itemInfo).getJSONArray("sellingStatus").getJSONObject(0).getJSONArray("currentPrice").getJSONObject(0).getString("__value__")
+        val link = JSONObject(itemInfo).getJSONArray("viewItemURL").getString(0)
+        fbBtn.setOnClickListener{
+            val shareText = "Buy $itemTitle at $price from the link below. $link"
+            var urlIntent: Intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    "https://www.facebook.com/sharer/sharer.php?u=${Uri.encode(link)}&hashtag=${
+                        Uri.encode(
+                            "#CSCI571Fall23AndroidApp"
+                        )
+                    }"
+                )
+            );
+            startActivity(urlIntent)
+        }
 
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             // Set the tab titles here

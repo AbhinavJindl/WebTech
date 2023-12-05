@@ -35,6 +35,7 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="ShippingTextValue" parent="ThemeOverlay.AppCompat">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/gray</item>
