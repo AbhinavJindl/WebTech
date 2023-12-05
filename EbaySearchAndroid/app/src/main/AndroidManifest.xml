@@ -26,7 +26,8 @@
         <activity android:name=".SearchResultsLoading" />
         <activity
             android:name=".TabActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

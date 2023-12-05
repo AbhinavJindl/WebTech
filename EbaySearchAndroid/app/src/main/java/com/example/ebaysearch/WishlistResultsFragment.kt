@@ -1,14 +1,17 @@
 package com.example.ebaysearch
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import com.google.android.material.card.MaterialCardView
 import org.json.JSONArray
 
 class WishlistResultsFragment : Fragment() {
@@ -19,33 +22,43 @@ class WishlistResultsFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    private fun updateUi(view: View, items: JSONArray) {
+        view.findViewById<MaterialCardView>(R.id.noResultsText).isVisible = (items.length() == 0)
+        view.findViewById<LinearLayout>(R.id.body).isVisible = (items.length() != 0)
+        var totalPrice = 0.0
+
+        for (i in 0 until items.length()) {
+            totalPrice += items.getJSONObject(i).getJSONArray("sellingStatus").getJSONObject(0).getJSONArray("currentPrice").getJSONObject(0).getString("__value__").toFloat()
+        }
+
+        view.findViewById<TextView>(R.id.wishlist_items_price).text = "\$" + String.format("%.2f", totalPrice)
+
+        view.findViewById<TextView>(R.id.wishlist_items_count).text = "Wishlist Total(${items.length()} items)"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wishlist_results, container, false)
-
         wishlistResultsRecyclerView = view.findViewById(R.id.wishlistResultsRecyclerView)
-        wishlistResultsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        val jsonArray = JSONArray(retrieveData(requireContext()))
-        adapter = ItemAdapter(jsonArray)
+        wishlistResultsRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter = ItemAdapter(retrieveData(requireContext()), true)
         wishlistResultsRecyclerView.adapter = adapter
-
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver(){
+            override fun onChanged() {
+                super.onChanged()
+                updateUi(view, retrieveData(requireContext()))
+            }
+        })
+        updateUi(view, retrieveData(requireContext()))
         return view
     }
 
-    fun saveData(context: Context, value: String) {
-        val sharedPreferences = context.getSharedPreferences("WishlistItems", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        editor.putString("items", value)
-        editor.apply()
-    }
-
-    fun retrieveData(context: Context): String {
-        val sharedPreferences = context.getSharedPreferences("WishlistItems", Context.MODE_PRIVATE)
-        return sharedPreferences.getString("items", "") ?: ""
+    override fun onResume() {
+        super.onResume()
+        adapter.products = retrieveData(requireContext())
+        adapter.notifyDataSetChanged()
     }
 
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemDetailActivity"
-    android:orientation="vertical">
+    tools:context=".ItemDetailActivity">
 
     <androidx.appcompat.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +15,8 @@
         android:background="@color/purple"
         android:elevation="4dp"
         android:theme="@style/ToolbarTheme"
-        android:contentInsetStart="4dp">
+        android:contentInsetStart="4dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,7 +58,8 @@
         app:tabIndicatorColor="@color/white"
         app:tabIconTint="@color/tab_text_selector"
         app:tabTextColor="@color/tab_text_selector"
-        app:tabIndicatorFullWidth="true">
+        app:tabIndicatorFullWidth="true"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -66,7 +67,25 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailTabsLayout" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/orange"
+        android:src="@drawable/cart_plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/FLoatingIconStyle"
+        app:tint="@color/white" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

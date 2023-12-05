@@ -2,10 +2,15 @@ package com.example.ebaysearch
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import com.google.android.material.card.MaterialCardView
 import org.json.JSONArray
 
 class ItemsListActivity : AppCompatActivity() {
@@ -34,12 +39,18 @@ class ItemsListActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        recyclerView = findViewById(R.id.searchResultsRecyclerView)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-
         val jsonString = intent.getStringExtra("itemsArray")
         val jsonArray = JSONArray(jsonString)
-        adapter = ItemAdapter(jsonArray)
+        recyclerView = findViewById(R.id.searchResultsRecyclerView)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        adapter = ItemAdapter(jsonArray, false)
         recyclerView.adapter = adapter
+        findViewById<MaterialCardView>(R.id.noResultsText).isVisible = jsonArray.length() == 0
+        recyclerView.isVisible = jsonArray.length() != 0
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        adapter.notifyDataSetChanged()
     }
 }

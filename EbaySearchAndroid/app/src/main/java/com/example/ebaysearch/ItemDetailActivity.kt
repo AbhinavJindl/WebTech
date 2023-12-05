@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import org.json.JSONObject
@@ -21,6 +22,7 @@ class ItemDetailActivity : AppCompatActivity() {
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var fbBtn: ImageButton
     lateinit var HOST: String
+    private lateinit var floatingIcon: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,24 @@ class ItemDetailActivity : AppCompatActivity() {
         }
 
         fbBtn = findViewById(R.id.fbBtn)
+        floatingIcon = findViewById(R.id.floatingIcon)
+        val itemIndex = findItem(retrieveData(this), itemId)
+        if (itemIndex == null) {
+            floatingIcon.setImageResource(R.drawable.cart_plus)
+            floatingIcon.setOnClickListener{
+                saveData(
+                    this, retrieveData(this).put(JSONObject(itemInfo))
+                )
+                floatingIcon.setImageResource(R.drawable.cart_remove)
+            }
+
+        } else {
+            floatingIcon.setImageResource(R.drawable.cart_remove)
+            floatingIcon.setOnClickListener{
+                saveData(this, removeElementAtIndex(retrieveData(this), itemIndex))
+                floatingIcon.setImageResource(R.drawable.cart_plus)
+            }
+        }
         viewPager = findViewById(R.id.viewPager)
         tabs = findViewById(R.id.detailTabsLayout)
         adapter = ViewPagerAdapter(this, itemId, itemInfo)

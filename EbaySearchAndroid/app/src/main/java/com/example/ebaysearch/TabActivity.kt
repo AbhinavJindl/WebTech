@@ -50,7 +50,7 @@ class TabActivity : AppCompatActivity() {
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> ProductSearch()
-                1 -> ProductSearch()
+                1 -> WishlistResultsFragment()
                 else -> Fragment()
             }
         }
