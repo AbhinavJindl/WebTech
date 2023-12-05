@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.json.JSONArray
@@ -35,7 +36,8 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val jsonObject = products.getJSONObject(position)
-        holder.itemName.text = jsonObject.getJSONArray("title").getString(0)
+        val title = jsonObject.getJSONArray("title").getString(0)
+        holder.itemName.text = title
         Glide.with(holder.itemView.context).load(jsonObject.getJSONArray("galleryURL").getString(0)).into(holder.itemImage)
         val wishListItemIndex = findItem(retrieveData(context), jsonObject.getString("itemId"))
         if (wishListItemIndex == null) {
@@ -43,6 +45,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
             holder.wishlistIcon.setOnClickListener{
                 val updatedItems = retrieveData(context).put(jsonObject)
                 saveData(context, updatedItems)
+                Toast.makeText(it.context, "${title.substring(0, 9)}... was added to wishlist", Toast.LENGTH_LONG).show()
                 if (isWishlistTab) {
                     products = retrieveData(context)
                 }
@@ -54,6 +57,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
             holder.wishlistIcon.setOnClickListener{
                 val updatedItems = removeElementAtIndex(retrieveData(context), wishListItemIndex)
                 saveData(context, updatedItems)
+                Toast.makeText(it.context, "${title.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_LONG).show()
                 if (isWishlistTab) {
                     products = retrieveData(context)
                 }

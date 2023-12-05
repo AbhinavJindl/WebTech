@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -61,9 +62,8 @@ class ItemDetailActivity : AppCompatActivity() {
         if (itemIndex == null) {
             floatingIcon.setImageResource(R.drawable.cart_plus)
             floatingIcon.setOnClickListener{
-                saveData(
-                    this, retrieveData(this).put(JSONObject(itemInfo))
-                )
+                saveData(this, retrieveData(this).put(JSONObject(itemInfo)))
+                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was added to wishlist", Toast.LENGTH_LONG).show()
                 floatingIcon.setImageResource(R.drawable.cart_remove)
             }
 
@@ -71,6 +71,7 @@ class ItemDetailActivity : AppCompatActivity() {
             floatingIcon.setImageResource(R.drawable.cart_remove)
             floatingIcon.setOnClickListener{
                 saveData(this, removeElementAtIndex(retrieveData(this), itemIndex))
+                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_LONG).show()
                 floatingIcon.setImageResource(R.drawable.cart_plus)
             }
         }
