@@ -99,6 +99,7 @@ class ProductSearch : Fragment() {
             if (isChecked) {
                 // If the checkbox is checked, make the fields visible
                 hiddenField.visibility = View.VISIBLE
+                currentLocationEnableRadioButton.isChecked = true
             } else {
                 // Otherwise, hide the fields
                 hiddenField.visibility = View.GONE
@@ -120,6 +121,8 @@ class ProductSearch : Fragment() {
 
         zipcodeEnableRadioButton.setOnCheckedChangeListener { _, isChecked ->
             zipcodeEditText.isEnabled = isChecked
+            currentLocationEnableRadioButton.isChecked = !isChecked
+            zipcodeEnableRadioButton.isChecked = isChecked
             if (!isChecked) {
                 zipcodeEditText.setText("")
             }
@@ -156,11 +159,11 @@ class ProductSearch : Fragment() {
             val keyword = keywordEditText.text.toString()
             if (keyword.isBlank()) {
                 keywordErrorText.visibility = View.VISIBLE
-                Toast.makeText(it.context, "Please fix all fields with errors", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "Please fix all fields with errors", Toast.LENGTH_SHORT).show()
             }
             else if (enableNearbySearchCheckbox.isChecked() && zipcodeEnableRadioButton.isChecked() && zipcodeEditText.text.toString().isBlank()) {
                 zipCodeErrorText.visibility = View.VISIBLE
-                Toast.makeText(it.context, "Please fix all fields with errors", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "Please fix all fields with errors", Toast.LENGTH_SHORT).show()
             }
             else {
                 keywordErrorText.visibility = View.GONE

@@ -63,7 +63,7 @@ class ItemDetailActivity : AppCompatActivity() {
             floatingIcon.setImageResource(R.drawable.cart_plus)
             floatingIcon.setOnClickListener{
                 saveData(this, retrieveData(this).put(JSONObject(itemInfo)))
-                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was added to wishlist", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was added to wishlist", Toast.LENGTH_SHORT).show()
                 floatingIcon.setImageResource(R.drawable.cart_remove)
             }
 
@@ -71,7 +71,7 @@ class ItemDetailActivity : AppCompatActivity() {
             floatingIcon.setImageResource(R.drawable.cart_remove)
             floatingIcon.setOnClickListener{
                 saveData(this, removeElementAtIndex(retrieveData(this), itemIndex))
-                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "${itemTitle.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_SHORT).show()
                 floatingIcon.setImageResource(R.drawable.cart_plus)
             }
         }

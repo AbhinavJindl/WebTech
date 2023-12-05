@@ -6,11 +6,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ShippingFragment">
 
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <!-- Progress Indicator -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/purple"
+            android:progressTint="@color/purple"    />
+
+        <!-- Loading Text -->
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Fetching Product Details ..."
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/purple"/>
+
+    </RelativeLayout>
+
+
     <LinearLayout
         android:id="@+id/product_shipping_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone">
         <TableLayout
             android:id="@+id/sold_by_table"
             android:layout_width="match_parent"
@@ -38,14 +74,13 @@
                 android:paddingLeft="8dp">
                 <TextView
                     android:text="Store Name"
-                    android:paddingEnd="16dp"
+                    android:paddingEnd="50dp"
                     android:layout_column="0"
                     android:textColor="@color/black"
                     style="@style/ShippingTextKey"/>
                 <TextView
-                    android:background="#EACAFF"
                     android:id="@+id/store_name_value"
-                    android:layout_width="wrap_content"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:text="This ia a store link"
                     android:singleLine="true"
@@ -106,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="50%"
-                        android:textSize="10dp"/>
+                        android:textSize="8dp"/>
 
                 </FrameLayout>
             </TableRow>
@@ -125,6 +160,7 @@
                     android:layout_width="wrap_content"
                     android:src="@drawable/star_circle_outline"
                     android:layout_gravity="start"
+                    android:paddingTop="3dp"
                     android:minHeight="20sp"
 
                     style="@style/ShippingTextValue"/>
@@ -164,7 +200,7 @@
                 android:paddingLeft="8dp">
                 <TextView
                     android:text="Shipping Cost"
-                    android:paddingEnd="16dp"
+                    android:paddingEnd="20dp"
                     android:layout_column="0"
                     android:textColor="@color/black"
                     style="@style/ShippingTextKey"/>
@@ -276,8 +312,11 @@
                     style="@style/ShippingTextKey"/>
                 <TextView
                     android:id="@+id/refund_mode_value"
-                    android:text="Monay Back"
+                    android:layout_width="180dp"
+                    android:text="Money Back or replacement"
                     android:layout_column="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/gray"
                     style="@style/ShippingTextValue"/>
             </TableRow>

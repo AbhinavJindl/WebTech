@@ -39,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/product_title"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="2dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,14 +50,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Zip: 900**"
-                    android:padding="8dp"/>
+                    android:textColor="@color/gray"/>
 
                 <TextView
                     android:id="@+id/product_shipping"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Free"
-                    android:padding="8dp"/>
+                    android:textColor="@color/gray"/>
             </LinearLayout>
 
             <View
@@ -68,7 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:src="@drawable/cart_plus"/>
+                android:src="@drawable/cart_plus"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
@@ -76,14 +78,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_first_info"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="2dp">
             <TextView
                 android:id="@+id/product_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="condition"
-                android:padding="8dp"
-                android:gravity="center_horizontal"/>
+                android:layout_gravity="center"
+                android:textColor="@color/gray"/>
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -93,8 +96,7 @@
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:padding="8dp"
                 android:textStyle="bold"
                 android:textColor="@color/purple"

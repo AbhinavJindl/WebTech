@@ -45,7 +45,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
             holder.wishlistIcon.setOnClickListener{
                 val updatedItems = retrieveData(context).put(jsonObject)
                 saveData(context, updatedItems)
-                Toast.makeText(it.context, "${title.substring(0, 9)}... was added to wishlist", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "${title.substring(0, 9)}... was added to wishlist", Toast.LENGTH_SHORT).show()
                 if (isWishlistTab) {
                     products = retrieveData(context)
                 }
@@ -57,7 +57,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
             holder.wishlistIcon.setOnClickListener{
                 val updatedItems = removeElementAtIndex(retrieveData(context), wishListItemIndex)
                 saveData(context, updatedItems)
-                Toast.makeText(it.context, "${title.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_LONG).show()
+                Toast.makeText(it.context, "${title.substring(0, 9)}... was removed from wishlist", Toast.LENGTH_SHORT).show()
                 if (isWishlistTab) {
                     products = retrieveData(context)
                 }
@@ -66,7 +66,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
         }
 
         try {
-            holder.itemZip.text = jsonObject.getJSONArray("postalCode").getString(0)
+            holder.itemZip.text = "Zip: " + jsonObject.getJSONArray("postalCode").getString(0)
         } catch (e: JSONException) {
             holder.itemZip.text = "N/A"
         }

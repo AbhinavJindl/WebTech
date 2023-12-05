@@ -172,6 +172,14 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <TextView
+                    android:id="@+id/distanceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="text"
+                    android:text="Distance"/>
+
                 <EditText
                     android:id="@+id/milesFromText"
                     android:layout_width="match_parent"
@@ -191,7 +199,8 @@
                     android:id="@+id/fromRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="30dp">
 
                     <RadioButton
                         android:id="@+id/currentLocationRadioButton"
@@ -199,27 +208,42 @@
                         android:layout_height="wrap_content"
                         android:text="Current Location"/>
 
-                    <RadioButton
-                        android:id="@+id/zipcodeRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""/>
-
-                    <AutoCompleteTextView
-                        android:id="@+id/zipcodeText"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="zipcode"
-                        android:inputType="number"
-                        android:enabled="false"/>
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/zipcodeErrorText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/error_message"
-                        android:visibility="gone"
-                        android:text="Please enter mandatory field" />
+                        <RadioButton
+                            android:id="@+id/zipcodeRadioButton"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:text=""/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingRight="40dp">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/zipcodeText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="zipcode"
+                                android:inputType="number"
+                                android:enabled="false"/>
+
+                            <TextView
+                                android:id="@+id/zipcodeErrorText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/error_message"
+                                android:visibility="gone"
+                                android:text="Please enter mandatory field" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </RadioGroup>
 
             </LinearLayout>
