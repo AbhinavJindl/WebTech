@@ -82,7 +82,7 @@ class ItemAdapter (public var products: JSONArray, isWishlist: Boolean) : Recycl
         }
 
         try {
-            holder.itemCondition.text = "New"
+            holder.itemCondition.text = jsonObject.getJSONArray("condition").getJSONObject(0).getJSONArray("conditionDisplayName").getString(0)
         } catch (e: JSONException) {
             holder.itemZip.text = "N/A"
         }

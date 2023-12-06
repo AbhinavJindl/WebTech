@@ -46,7 +46,7 @@ class ProductSearch : Fragment() {
     lateinit var HOST: String
 
     private val categoryValueMap = mapOf(
-        "All Categories" to "0",
+        "All" to "0",
         "Art" to "550",
         "Baby" to "2984",
         "Books" to "267",
@@ -76,7 +76,7 @@ class ProductSearch : Fragment() {
         categorySpinner.adapter = adapter
 
         // Set default value
-        val defaultPosition = adapter.getPosition("All Categories")
+        val defaultPosition = adapter.getPosition("All")
         categorySpinner.setSelection(defaultPosition)
 
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -232,7 +232,9 @@ class ProductSearch : Fragment() {
         var zipCode = "90007"
         var milesFrom = "10"
         if (extraLocationSearchEnabled) {
-            milesFrom = milesFromText.text.toString()
+
+            val milesFromTextVal = milesFromText.text.toString()
+            milesFrom = if (milesFromTextVal.isEmpty()) "10" else milesFromTextVal
             val zipcodeEnabled = zipcodeEnableRadioButton.isChecked
             if (zipcodeEnabled) {
                 zipCode = zipcodeEditText.text.toString()

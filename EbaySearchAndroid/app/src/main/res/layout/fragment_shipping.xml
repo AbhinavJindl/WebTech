@@ -229,7 +229,7 @@
             <TableRow
                 android:paddingLeft="8dp">
                 <TextView
-                    android:text="Handling TIme"
+                    android:text="Handling Time"
                     android:paddingEnd="16dp"
                     android:layout_column="0"
                     android:textColor="@color/black"

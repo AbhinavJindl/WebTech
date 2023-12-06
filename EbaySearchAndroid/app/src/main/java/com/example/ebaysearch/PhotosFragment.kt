@@ -49,7 +49,7 @@ class PhotosFragment : Fragment() {
         val host = application.HOST
         var url = host + "google/similar_photos?"
 
-        url = application.addParameters(url, "queryText", text.replace(Regex("[^a-zA-Z0-9\\s]"), ""))
+        url = application.addParameters(url, "queryText", text.replace(Regex("[^a-zA-Z0-9\\s-]"), ""))
         val imageUrlsFromApi = ArrayList<String>()
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
