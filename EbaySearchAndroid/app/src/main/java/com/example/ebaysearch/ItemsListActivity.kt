@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.google.android.material.card.MaterialCardView
 import org.json.JSONArray
 
+/*
+“Create list of cards in Android Studio Kotlin using RecyclerView (50 lines). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+*/
 class ItemsListActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
@@ -51,6 +54,9 @@ class ItemsListActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
+        /*
+        “notify data of change in activity (1 line). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+        */
         adapter.notifyDataSetChanged()
     }
 }

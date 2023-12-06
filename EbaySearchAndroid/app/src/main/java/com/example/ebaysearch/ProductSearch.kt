@@ -45,6 +45,9 @@ class ProductSearch : Fragment() {
     lateinit var zipCodeErrorText: TextView
     lateinit var HOST: String
 
+    /*
+    “How to create map in android studio kotlin (10 lines). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+    */
     private val categoryValueMap = mapOf(
         "All" to "0",
         "Art" to "550",
@@ -79,6 +82,9 @@ class ProductSearch : Fragment() {
         val defaultPosition = adapter.getPosition("All")
         categorySpinner.setSelection(defaultPosition)
 
+        /*
+        “Handle spinner change in android studio (7 lines). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+        */
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 val selected = parent.getItemAtPosition(position).toString()
@@ -241,6 +247,9 @@ class ProductSearch : Fragment() {
             } else {
                 val url = "http://ip-api.com/json/"
                 zipCode = "90007"
+                /*
+                “Call API using Volley in Android Studio (20 lines). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+                */
                 val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
                     { response ->
                         zipCode = response.getString("zip")

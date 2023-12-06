@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 
+/*
+“Create loading page in android studio (15 lines). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+*/
 class SearchResultsLoading : AppCompatActivity() {
     companion object {
         @JvmStatic

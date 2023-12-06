@@ -30,7 +30,9 @@ class WishlistResultsFragment : Fragment() {
         for (i in 0 until items.length()) {
             totalPrice += items.getJSONObject(i).getJSONArray("sellingStatus").getJSONObject(0).getJSONArray("currentPrice").getJSONObject(0).getString("__value__").toFloat()
         }
-
+        /*
+        “Print to 2 decimal places" (1 line). ChatGPT, 4 Sep. version, OpenAI, 11 Sep. 2023, chat.openai.com/chat.
+        */
         view.findViewById<TextView>(R.id.wishlist_items_price).text = "\$" + String.format("%.2f", totalPrice)
 
         view.findViewById<TextView>(R.id.wishlist_items_count).text = "Wishlist Total(${items.length()} items)"
